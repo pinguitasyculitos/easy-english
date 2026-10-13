@@ -1,0 +1,1359 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Control Room English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Saira+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Radio de planta: lo que llega es una transmisión entrante (escuchar), lo que dices es tu transmisión (hablar).
+   Concreto frío de fondo, naranja de chaleco reflectivo para la acción, azul de canal para el audio. Una columna en el celular. */
+:root{
+  --bg:#E9EDF1; --card:#F8FAFB; --card2:#DFE5EB; --line:#C2CBD4; --ink:#14202B; --ink2:#4A5866;
+  --accent:#B93D0C; --accent-ink:#FFFFFF; --accent-bg:#FBE4D6; --radio:#0E5A86; --radio-bg:#DCEAF4;
+  --ok:#1E7347; --ok-bg:#D8EEE1; --warn:#8A5D00; --warn-bg:#F6E8C3; --bad:#B42318; --bad-bg:#F8DBD7;
+  --display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --navh:64px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10161C; --card:#18212A; --card2:#212C37; --line:#34414E; --ink:#E5EBF0; --ink2:#9BA9B6;
+    --accent:#FF8A4C; --accent-ink:#1A0E07; --accent-bg:#3B2216; --radio:#74BCE6; --radio-bg:#16303F;
+    --ok:#62C793; --ok-bg:#163020; --warn:#E3B64B; --warn-bg:#33290F; --bad:#F2857A; --bad-bg:#3B1C19; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10161C; --card:#18212A; --card2:#212C37; --line:#34414E; --ink:#E5EBF0; --ink2:#9BA9B6;
+  --accent:#FF8A4C; --accent-ink:#1A0E07; --accent-bg:#3B2216; --radio:#74BCE6; --radio-bg:#16303F;
+  --ok:#62C793; --ok-bg:#163020; --warn:#E3B64B; --warn-bg:#33290F; --bad:#F2857A; --bad-bg:#3B1C19; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--radio);outline-offset:2px}
+a{color:var(--radio)}
+.app{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:0 calc(var(--navh) + 28px)}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px 10px;flex-wrap:wrap}
+.brand{display:flex;gap:10px;align-items:center;min-width:0}
+.mark{width:34px;height:34px;flex:none;border-radius:8px;background:var(--accent);position:relative;overflow:hidden}
+.mark::before,.mark::after{content:"";position:absolute;left:0;right:0;height:5px;background:var(--card);opacity:.9}
+.mark::before{top:9px}.mark::after{bottom:9px}
+.brand b{display:block;font-family:var(--display);font-size:22px;line-height:1;letter-spacing:.01em}
+.brand small{display:block;font-size:12.5px;color:var(--ink2);line-height:1.3;margin-top:3px}
+.hstats{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink2);flex-wrap:wrap}
+.pill{font-family:var(--display);font-size:16px;font-weight:700;color:var(--accent-ink);background:var(--accent);padding:1px 9px;border-radius:5px;letter-spacing:.03em}
+.pill.dim{background:var(--card2);color:var(--ink2)}
+.icon{background:var(--card);border:1px solid var(--line);border-radius:8px;width:38px;height:38px;display:inline-grid;place-items:center;padding:0}
+.icon svg,.tabs svg,.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sync{font-size:12px}
+/* navegación */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs button{background:none;border:0;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11.5px;color:var(--ink2);min-height:var(--navh);justify-content:center}
+.tabs button[aria-current="page"]{color:var(--accent);font-weight:600}
+.tabs button[aria-current="page"] svg{stroke-width:2.4}
+@media (min-width:760px){
+  :root{--navh:0px}
+  .tabs{position:sticky;top:env(safe-area-inset-top,0px);bottom:auto;border:1px solid var(--line);border-radius:10px;margin-bottom:16px;grid-template-columns:repeat(5,1fr)}
+  .tabs button{flex-direction:row;gap:8px;font-size:14px;min-height:46px}
+}
+/* tipografía y bloques */
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:34px}h2{font-size:26px}h3{font-size:20px}
+p{margin:0 0 10px}
+.lead{color:var(--ink2);font-size:15px}
+.small{font-size:13px;color:var(--ink2)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.card.flat{background:transparent;border-style:dashed}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:9px;padding:11px 16px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--card);min-height:46px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.radio{background:var(--radio-bg);border-color:var(--radio);color:var(--radio)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--ink2);padding-inline:8px}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.link{background:none;border:0;padding:0;color:var(--radio);text-decoration:underline;text-underline-offset:3px;font-size:14px}
+.chip{display:inline-block;font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--card2);color:var(--ink2);white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.bad{background:var(--bad-bg);color:var(--bad)}.chip.acc{background:var(--accent-bg);color:var(--accent)}
+/* nivel A1→C1 como tanque */
+.track{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:10px 0 6px}
+.track div{position:relative;height:44px;border:1px solid var(--line);border-radius:6px;background:var(--card2);overflow:hidden}
+.track span.f{position:absolute;left:0;right:0;bottom:0;background:var(--accent);opacity:.85}
+.track div.pass span.f{background:var(--ok);opacity:.9}
+.track b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:19px;color:var(--ink);mix-blend-mode:normal}
+.track div.cur{outline:2px solid var(--accent);outline-offset:1px}
+.big{font-family:var(--display);font-size:46px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpis div{background:var(--card2);border-radius:8px;padding:8px 10px;min-width:0}
+.kpis b{display:block;font-family:var(--display);font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpis span{font-size:12px;color:var(--ink2)}
+/* turno de hoy */
+ol.blocks{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+ol.blocks li button{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+ol.blocks li button:hover{border-color:var(--accent)}
+ol.blocks .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:17px;background:var(--card2)}
+ol.blocks li.done .n{background:var(--ok);color:var(--card)}
+ol.blocks b{display:block;font-size:15.5px}
+ol.blocks small{display:block;color:var(--ink2);font-size:13px;line-height:1.35}
+/* práctica */
+.runhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.prog{height:6px;border-radius:3px;background:var(--card2);overflow:hidden;margin-bottom:14px}
+.prog span{display:block;height:100%;background:var(--accent)}
+.incoming{background:var(--radio-bg);border:1px solid var(--radio);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.incoming .eyebrow{color:var(--radio)}
+.play{display:flex;align-items:center;gap:14px}
+.playbtn{width:64px;height:64px;border-radius:50%;border:0;background:var(--radio);color:var(--card);display:grid;place-items:center;flex:none}
+.playbtn svg{width:28px;height:28px;fill:currentColor;stroke:none}
+.wave{display:flex;gap:4px;align-items:center;height:34px}
+.wave i{width:5px;height:10px;border-radius:3px;background:var(--radio);opacity:.5}
+.wave.on i{animation:wv .9s ease-in-out infinite;opacity:1}
+.wave.on i:nth-child(2){animation-delay:.12s}.wave.on i:nth-child(3){animation-delay:.24s}.wave.on i:nth-child(4){animation-delay:.36s}.wave.on i:nth-child(5){animation-delay:.48s}
+@keyframes wv{0%,100%{height:8px}50%{height:32px}}
+.cue{font-size:20px;font-weight:600;line-height:1.35}
+.cue.en{font-family:var(--body)}
+.es{color:var(--ink2);font-size:15px}
+.hidden-text{filter:blur(6px);user-select:none}
+.tx{border:2px solid var(--accent);border-radius:12px;padding:12px;background:var(--card);display:flex;flex-direction:column;gap:8px}
+.tx .eyebrow{color:var(--accent);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.tx textarea{width:100%;min-height:88px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:10px;font-family:var(--mono);font-size:16px;line-height:1.45}
+.tx.tall textarea{min-height:150px}
+.hint{font-size:13px;color:var(--ink2);display:flex;gap:6px;align-items:flex-start}
+.hint svg{width:16px;height:16px;flex:none;margin-top:2px;fill:none;stroke:currentColor;stroke-width:2}
+.fb{border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.fb.ok{background:var(--ok-bg)}.fb.near{background:var(--warn-bg)}.fb.bad{background:var(--bad-bg)}
+.fb h3{font-size:22px}
+.diff{font-family:var(--mono);font-size:15.5px;line-height:1.9}
+.w{padding:1px 4px;border-radius:4px}
+.w.ok{background:var(--ok-bg);color:var(--ok)}
+.w.near{background:var(--warn-bg);color:var(--warn);text-decoration:underline dotted}
+.w.sub{background:var(--bad-bg);color:var(--bad)}.w.sub s{opacity:.7}
+.w.miss{background:var(--bad-bg);color:var(--bad);text-decoration:underline}
+.w.extra{color:var(--ink2)}
+.legendw{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--ink2)}
+/* chat */
+.chat{display:flex;flex-direction:column;gap:10px}
+.msg{max-width:88%;border-radius:12px;padding:10px 12px;font-size:16px}
+.msg.them{align-self:flex-start;background:var(--radio-bg);border:1px solid var(--radio)}
+.msg.me{align-self:flex-end;background:var(--accent-bg);border:1px solid var(--accent);font-family:var(--mono);font-size:15px}
+.msg .meta{display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.thinking{display:inline-flex;gap:4px;align-items:center;color:var(--ink2);font-size:14px}
+.thinking i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:bl 1.2s infinite}
+.thinking i:nth-child(2){animation-delay:.2s}.thinking i:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,100%{opacity:.2}50%{opacity:1}}
+/* evaluación */
+.scores{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.scores div{background:var(--card2);border-radius:8px;padding:8px 6px;text-align:center;min-width:0}
+.scores b{display:block;font-family:var(--display);font-size:24px}
+.scores span{font-size:11px;color:var(--ink2);display:block;line-height:1.2}
+.fix{border-left:4px solid var(--warn);background:var(--card2);padding:8px 10px;border-radius:0 8px 8px 0;font-size:15px}
+.fix s{color:var(--bad)} .fix b{color:var(--ok);font-weight:600}
+.phr{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.phr div{min-width:0}
+/* ruta */
+.lvhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.units{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.units button{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.units button:hover{border-color:var(--accent)}
+.units button.cur{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.units b{font-size:15px;line-height:1.25}
+.units small{color:var(--ink2);font-size:12.5px;line-height:1.3}
+.meter{height:6px;border-radius:3px;background:var(--card2);overflow:hidden}
+.meter span{display:block;height:100%;background:var(--accent)}
+.meter span.full{background:var(--ok)}
+.plist{display:flex;flex-direction:column;gap:6px}
+.pitem{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--card)}
+.pitem .en{font-weight:600}
+.pitem .es{font-size:13.5px}
+.box{font-family:var(--mono);font-size:12px;color:var(--ink2);white-space:nowrap}
+/* progreso */
+.bars14{display:flex;align-items:flex-end;gap:4px;height:110px;padding-top:6px}
+.bars14 div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;height:100%;justify-content:flex-end}
+.bars14 span.b{width:100%;max-width:26px;background:var(--accent);border-radius:3px 3px 0 0;min-height:2px}
+.bars14 small{font-size:10.5px;color:var(--ink2);font-family:var(--mono)}
+.lvbar{display:grid;grid-template-columns:44px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:14px}
+.lvbar b{font-family:var(--display);font-size:18px}
+.lvbar output{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.note{font-size:13px;color:var(--ink2)}
+.banner{border-radius:10px;padding:10px 12px;font-size:14px;background:var(--warn-bg);color:var(--ink);margin-bottom:12px}
+.confirm{border:1px solid var(--bad);background:var(--bad-bg);border-radius:10px;padding:10px 12px}
+label.fld{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:600}
+label.fld input,label.fld select{font-weight:400;padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);min-height:44px;max-width:100%}
+.toggle{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+.toggle input{width:22px;height:22px;margin-top:1px;accent-color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.how{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.how div{background:var(--card2);border-radius:8px;padding:8px 10px;font-size:13.5px;min-width:0}
+.how b{display:block;font-size:13.5px}
+@media (max-width:560px){
+  h1{font-size:29px}
+  .units,.how{grid-template-columns:1fr}
+  .scores{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .kpis b{font-size:21px}
+  .cue{font-size:18px}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="app">
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true"></span><div><b>Control Room English</b><small>Inglés americano para planta concentradora · A1 → C1</small></div></div>
+  <div class="hstats"><span class="pill" id="hLevel">A1</span><span id="hStreak"></span><span id="hHours"></span><button class="icon" id="btnSettings" type="button" aria-label="Ajustes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+</header>
+<nav class="tabs" id="tabs" aria-label="Secciones">
+  <button type="button" data-go="hoy"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Hoy</button>
+  <button type="button" data-go="ruta"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></svg>Ruta</button>
+  <button type="button" data-go="hablar"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Conversar</button>
+  <button type="button" data-go="sonidos"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Sonidos</button>
+  <button type="button" data-go="progreso"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progreso</button>
+</nav>
+<div id="banner"></div>
+<main id="main" aria-live="polite"></main>
+</div>
+<script>
+/* ====================== CONTENIDO: RUTA A1 → C1 ====================== */
+const LEVELS=[
+ {id:'A1',h:100,name:'Principiante',
+  can:'Entiendes y dices frases muy cortas: saludarte, presentarte, números, horas, equipos de la planta y órdenes de seguridad.',
+  talk:'Use very simple words and short sentences (5 to 8 words). Speak slowly and clearly.',maxw:15,rate:0.8,words:60},
+ {id:'A2',h:200,name:'Básico',
+  can:'Sostienes conversaciones de rutina: tu trabajo, el turno, lo que pasó ayer, pedir ayuda y hablar por radio.',
+  talk:'Use simple sentences and everyday words. Avoid idioms.',maxw:25,rate:0.88,words:110},
+ {id:'B1',h:400,name:'Intermedio',
+  can:'Explicas problemas y sus causas, describes procedimientos, cuentas experiencias y das opiniones. Entiendes reuniones claras.',
+  talk:'Speak clearly and naturally, with common phrasal verbs and linking words.',maxw:35,rate:0.95,words:180},
+ {id:'B2',h:600,name:'Intermedio alto',
+  can:'Discutes temas técnicos con fluidez, defiendes tu punto de vista y entiendes reuniones y presentaciones a velocidad normal.',
+  talk:'Speak at natural speed with idiomatic workplace language. Challenge my ideas a little.',maxw:50,rate:1.0,words:280},
+ {id:'C1',h:800,name:'Avanzado',
+  can:'Hablas con fluidez y precisión sin buscar palabras, matizas, lideras reuniones, presentas a gerencia y entiendes charlas largas y lo que se dice entre líneas.',
+  talk:'Speak like a demanding native-speaker colleague: idioms, implied meaning, pushback and follow-up questions that require nuance.',maxw:60,rate:1.08,words:380}
+];
+const LV_IDX={A1:0,A2:1,B1:2,B2:3,C1:4};
+
+const UNITS=[
+/* ---------------- A1 ---------------- */
+{id:'a1u1',lv:'A1',t:'Saludos y presentación',en:'Meeting the team',
+ ctx:'First day at a copper concentrator in Arizona. The learner meets a coworker in the control room.',
+ role:'Mike, a friendly control room operator',me:'a new metallurgical engineer from Peru',
+ goal:'Saluda, di tu nombre, de dónde eres y en qué trabajas.',focus:'Verbo to be · I\'m / you are · preguntas con what y where',
+ ch:[['Hi, my name is {name}.','Hola, me llamo {name}.'],['Nice to meet you.','Mucho gusto.'],['I\'m a metallurgical engineer.','Soy ingeniero metalúrgico.'],['I\'m from Peru.','Soy del Perú.'],['I work in the flotation area.','Trabajo en el área de flotación.'],['Where are you from?','¿De dónde eres?'],['What do you do here?','¿Qué haces aquí?'],['See you later.','Nos vemos luego.']],
+ tasks:[{es:'Preséntate: nombre, país, profesión y área de trabajo.',en:'Introduce yourself to a new coworker: your name, country, job and work area.'},{es:'Pregúntale a tu compañero su nombre, de dónde es y qué hace.',en:'Ask your new coworker three simple questions about himself.'}]},
+{id:'a1u2',lv:'A1',t:'Números, horas y unidades',en:'Numbers on the board',
+ ctx:'The learner reads values from the control room screens to a supervisor: time, tonnage, pH, percentages.',
+ role:'Sarah, the shift supervisor',me:'the control room operator',
+ goal:'Lee valores de la planta en voz alta: hora, toneladas, pH y porcentajes.',focus:'Números del 1 al 10 000 · decimales · la hora · how many / how much',
+ ch:[['What time is it?','¿Qué hora es?'],['It\'s six thirty in the morning.','Son las seis y media de la mañana.'],['The shift starts at seven.','El turno empieza a las siete.'],['The mill processes two thousand tonnes per hour.','El molino procesa dos mil toneladas por hora.'],['The pH is ten point five.','El pH es diez punto cinco.'],['The tank is eighty percent full.','El tanque está al ochenta por ciento.'],['How many pumps are running?','¿Cuántas bombas están funcionando?'],['Three pumps are running.','Tres bombas están funcionando.']],
+ tasks:[{es:'Dile a tu supervisora la hora, el tonelaje y el pH del rougher.',en:'Tell your supervisor the time, the mill throughput and the rougher pH.'},{es:'Pregunta cuántas bombas y cuántos ciclones están en servicio.',en:'Ask how many pumps and cyclones are in service.'}]},
+{id:'a1u3',lv:'A1',t:'Áreas y equipos',en:'Around the plant',
+ ctx:'The learner gives a short tour of the plant to a visitor and says where the equipment is.',
+ role:'Tom, a visitor from the head office',me:'the plant engineer giving the tour',
+ goal:'Di qué es cada equipo y dónde está.',focus:'This is / that is · there is / there are · preposiciones de lugar',
+ ch:[['This is the control room.','Esta es la sala de control.'],['The ball mill is over there.','El molino de bolas está allá.'],['The flotation cells are on the second floor.','Las celdas de flotación están en el segundo piso.'],['Where is the thickener?','¿Dónde está el espesador?'],['It\'s next to the filter plant.','Está al lado de la planta de filtros.'],['There are two ball mills.','Hay dos molinos de bolas.'],['Is the pump on?','¿Está prendida la bomba?'],['No, it\'s off.','No, está apagada.']],
+ tasks:[{es:'Describe tu planta: qué equipos hay y dónde están.',en:'Describe your plant: what equipment there is and where it is.'},{es:'Explica a un visitante cómo llegar del molino a la flotación.',en:'Tell a visitor where flotation is from the mill.'}]},
+{id:'a1u4',lv:'A1',t:'Seguridad: órdenes básicas',en:'Safety first',
+ ctx:'A safety talk at the start of the shift and a situation where someone is about to do something unsafe.',
+ role:'Carlos, the safety supervisor',me:'an operator in the safety talk',
+ goal:'Da y entiende órdenes cortas de seguridad.',focus:'Imperativo · don\'t · can / can\'t',
+ ch:[['Stop! Don\'t touch that.','¡Alto! No toques eso.'],['Wear your hard hat and safety glasses.','Usa tu casco y tus lentes de seguridad.'],['Lock out the pump first.','Bloquea la bomba primero.'],['Stay away from the conveyor.','Aléjate de la faja.'],['Call the control room.','Llama a la sala de control.'],['Is it safe?','¿Es seguro?'],['Yes, it\'s safe now.','Sí, ya es seguro.'],['I can\'t start the pump.','No puedo arrancar la bomba.']],
+ tasks:[{es:'Da tres órdenes de seguridad a un operador nuevo.',en:'Give three safety instructions to a new operator.'},{es:'Explica por qué no puedes arrancar una bomba ahora.',en:'Say that you cannot start a pump now and why.'}]},
+{id:'a1u5',lv:'A1',t:'Tu rutina y el turno',en:'My work day',
+ ctx:'A coworker asks the learner about his routine and his shift schedule.',
+ role:'Jenny, a lab technician',me:'a plant metallurgist',
+ goal:'Cuenta tu rutina diaria y tus horarios.',focus:'Presente simple · do / does · adverbios de frecuencia',
+ ch:[['I start work at seven.','Empiezo a trabajar a las siete.'],['I check the pumps every hour.','Reviso las bombas cada hora.'],['I usually work twelve-hour shifts.','Normalmente trabajo turnos de doce horas.'],['Do you work nights?','¿Trabajas de noche?'],['Yes, I work nights this week.','Sí, trabajo de noche esta semana.'],['I take a break at noon.','Tomo un descanso al mediodía.'],['I don\'t work on Sundays.','No trabajo los domingos.'],['My supervisor is very nice.','Mi supervisor es muy amable.']],
+ tasks:[{es:'Describe tu día de trabajo de principio a fin.',en:'Describe your typical work day from start to finish.'},{es:'Pregunta a tu compañera por su horario.',en:'Ask your coworker about her schedule.'}]},
+{id:'a1u6',lv:'A1',t:'Llegada a Estados Unidos',en:'Arriving in the USA',
+ ctx:'At the airport immigration desk and then at the hotel front desk in Phoenix, Arizona.',
+ role:'an immigration officer and later a hotel receptionist',me:'a traveler arriving for work',
+ goal:'Responde preguntas en migración y haz el check-in en el hotel.',focus:'Preguntas y respuestas cortas · I have · I\'m here for',
+ ch:[['I\'m here for work.','Estoy aquí por trabajo.'],['I\'m staying for two weeks.','Me quedo dos semanas.'],['Here is my passport.','Aquí está mi pasaporte.'],['I have a reservation.','Tengo una reservación.'],['Can I have the Wi-Fi password?','¿Me da la contraseña del wifi?'],['Where is the restroom?','¿Dónde está el baño?'],['How much is it?','¿Cuánto cuesta?'],['Thank you, have a nice day.','Gracias, que tenga un buen día.']],
+ tasks:[{es:'Responde al oficial de migración: motivo del viaje, cuánto tiempo y dónde te quedas.',en:'Answer an immigration officer: why you are here, how long and where you are staying.'},{es:'Haz el check-in en el hotel y pide la contraseña del wifi.',en:'Check in at a hotel and ask for the Wi-Fi password.'}]},
+/* ---------------- A2 ---------------- */
+{id:'a2u1',lv:'A2',t:'Lo que pasó en el turno',en:'What happened last night',
+ ctx:'Morning handover: the night shift operator explains what happened when the ball mill tripped.',
+ role:'Dave, the day shift supervisor',me:'the night shift operator',
+ goal:'Cuenta en orden lo que pasó en tu turno.',focus:'Pasado simple regular e irregular · did / didn\'t · first, then, after that',
+ ch:[['The ball mill tripped at three in the morning.','El molino de bolas se disparó a las tres de la mañana.'],['We stopped the feed.','Paramos la alimentación.'],['The electrician checked the motor.','El electricista revisó el motor.'],['It started again at four thirty.','Volvió a arrancar a las cuatro y media.'],['We lost about two hours of production.','Perdimos unas dos horas de producción.'],['Nobody got hurt.','Nadie salió herido.'],['Did you call the supervisor?','¿Llamaste al supervisor?'],['Yes, I called him right away.','Sí, lo llamé de inmediato.']],
+ tasks:[{es:'Cuenta a tu supervisor qué pasó en tu último turno.',en:'Tell your supervisor what happened during your last shift.'},{es:'Explica una parada de equipo: qué pasó, qué hicieron y cuándo volvió a arrancar.',en:'Describe an equipment stop: what happened, what you did and when it restarted.'}]},
+{id:'a2u2',lv:'A2',t:'Hablar por radio',en:'On the radio',
+ ctx:'Radio communication between the control room and a field operator in the flotation area.',
+ role:'the control room operator on channel three',me:'the field operator in flotation',
+ goal:'Usa el protocolo de radio: identificarte, confirmar y pedir repetir.',focus:'Fórmulas de radio · copy, go ahead, say again, over',
+ ch:[['Control room, this is flotation, over.','Sala de control, aquí flotación, cambio.'],['Go ahead.','Adelante.'],['Copy that.','Entendido.'],['Say again, please.','Repite, por favor.'],['Can you confirm the pH reading?','¿Puedes confirmar la lectura de pH?'],['I\'m on my way.','Estoy en camino.'],['Stand by.','Espera un momento.'],['The frother pump is running now.','La bomba de espumante ya está funcionando.']],
+ tasks:[{es:'Llama por radio a la sala de control y reporta que la bomba de colector se paró.',en:'Call the control room on the radio and report that the collector pump stopped.'},{es:'Pide que te repitan una lectura y confírmala.',en:'Ask the control room to repeat a reading and confirm it.'}]},
+{id:'a2u3',lv:'A2',t:'Pedir y dar ayuda',en:'Can you give me a hand?',
+ ctx:'The learner needs help from a mechanic to change a valve and a coworker asks him for help too.',
+ role:'Rick, a maintenance mechanic',me:'a process engineer',
+ goal:'Pide ayuda con cortesía y ofrece ayuda.',focus:'Can / could / would you · I need · let me',
+ ch:[['Can you give me a hand with this valve?','¿Me echas una mano con esta válvula?'],['Could you check the pump pressure?','¿Podrías revisar la presión de la bomba?'],['I need a wrench.','Necesito una llave.'],['Let me show you.','Déjame mostrarte.'],['Is this the right way?','¿Así está bien?'],['Be careful, it\'s hot.','Cuidado, está caliente.'],['I\'ll do it after lunch.','Lo hago después del almuerzo.'],['Thanks a lot, I owe you one.','Muchas gracias, te debo una.']],
+ tasks:[{es:'Pide a un mecánico ayuda para revisar una bomba que vibra.',en:'Ask a mechanic to help you check a vibrating pump.'},{es:'Ofrece ayuda a un compañero que tiene un problema.',en:'Offer help to a coworker who has a problem.'}]},
+{id:'a2u4',lv:'A2',t:'Describir el proceso',en:'How the plant works',
+ ctx:'The learner explains the concentrator process to a new hire from the finance department.',
+ role:'Emily, a new financial analyst',me:'the metallurgist explaining the process',
+ goal:'Explica el proceso en orden y compara etapas.',focus:'First, then, after that · comparativos · more / less than',
+ ch:[['First, the ore goes to the crusher.','Primero, el mineral va a la chancadora.'],['Then it goes to the SAG mill.','Luego va al molino SAG.'],['The cyclones separate fine and coarse particles.','Los ciclones separan partículas finas y gruesas.'],['The fine particles go to flotation.','Las partículas finas van a flotación.'],['The concentrate has about twenty-five percent copper.','El concentrado tiene unos veinticinco por ciento de cobre.'],['The tailings go to the thickener.','Los relaves van al espesador.'],['Grinding uses more energy than flotation.','La molienda usa más energía que la flotación.'],['The final concentrate is cleaner than the rougher concentrate.','El concentrado final es más limpio que el concentrado rougher.']],
+ tasks:[{es:'Explica el proceso de tu planta, del mineral al concentrado.',en:'Explain your plant process from ore to concentrate.'},{es:'Compara la molienda con la flotación.',en:'Compare grinding and flotation.'}]},
+{id:'a2u5',lv:'A2',t:'Planes y horarios',en:'Plans for the shutdown',
+ ctx:'Planning a maintenance shutdown for next week with a planner.',
+ role:'Laura, the maintenance planner',me:'the plant engineer',
+ goal:'Habla de planes, fechas y horarios.',focus:'Going to · will · presente continuo para futuro',
+ ch:[['We\'re going to change the liners next week.','Vamos a cambiar los forros la próxima semana.'],['The shutdown starts on Monday.','La parada empieza el lunes.'],['I\'m working the night shift tomorrow.','Mañana trabajo el turno de noche.'],['I\'ll send you the report today.','Te mando el reporte hoy.'],['How long will it take?','¿Cuánto tiempo va a tomar?'],['It will take about thirty-six hours.','Va a tomar unas treinta y seis horas.'],['Let\'s meet in the control room at nine.','Reunámonos en la sala de control a las nueve.'],['What are you doing this weekend?','¿Qué vas a hacer este fin de semana?']],
+ tasks:[{es:'Explica el plan de la próxima parada: qué se va a hacer, cuándo y cuánto dura.',en:'Explain the plan for the next shutdown: what, when and how long.'},{es:'Cuenta tus planes para el fin de semana.',en:'Talk about your plans for the weekend.'}]},
+{id:'a2u6',lv:'A2',t:'Vida diaria en EE. UU.',en:'Everyday life in the US',
+ ctx:'Ordering at a coffee shop, asking for directions and calling about an apartment in Tucson.',
+ role:'a barista, then a landlord on the phone',me:'a newcomer living in the US',
+ goal:'Pide comida, pregunta direcciones y consulta por un departamento.',focus:'I\'d like · could I · preguntas de lugar y precio',
+ ch:[['I\'d like a large coffee, please.','Quisiera un café grande, por favor.'],['Can I pay by card?','¿Puedo pagar con tarjeta?'],['Could I get the check, please?','¿Me trae la cuenta, por favor?'],['How do I get to the mine from here?','¿Cómo llego a la mina desde aquí?'],['Is there a pharmacy near here?','¿Hay una farmacia cerca?'],['I\'m calling about the apartment.','Llamo por el departamento.'],['Is it still available?','¿Todavía está disponible?'],['How much is the rent?','¿Cuánto es el alquiler?']],
+ tasks:[{es:'Pide comida y bebida en un restaurante.',en:'Order food and a drink at a restaurant.'},{es:'Llama por un departamento: pregunta precio, tamaño y fecha de entrada.',en:'Call about an apartment: ask about rent, size and move-in date.'}]},
+/* ---------------- B1 ---------------- */
+{id:'b1u1',lv:'B1',t:'Explicar un problema y su causa',en:'Why did recovery drop?',
+ ctx:'Recovery dropped three points this morning. The superintendent asks the learner for an explanation.',
+ role:'Brian, the concentrator superintendent',me:'the plant metallurgist',
+ goal:'Explica qué pasó, por qué y qué propones.',focus:'Because, so, that\'s why · might / could · condicional cero y primero',
+ ch:[['Recovery dropped because the grind got coarser.','La recuperación bajó porque la molienda se hizo más gruesa.'],['The cyclone pressure was too low, so the overflow was coarse.','La presión de ciclones estaba muy baja, así que el rebose salió grueso.'],['I think the problem started when the ore changed.','Creo que el problema empezó cuando cambió el mineral.'],['It might be the frother pump.','Podría ser la bomba de espumante.'],['We need to find the root cause.','Tenemos que encontrar la causa raíz.'],['If the pH drops, pyrite floats.','Si baja el pH, flota la pirita.'],['If we close one cyclone, the pressure will go up.','Si cerramos un ciclón, la presión va a subir.'],['That\'s why the grade went down.','Por eso bajó la ley.']],
+ tasks:[{es:'Explica a tu superintendente por qué bajó la recuperación y qué propones hacer.',en:'Explain to your superintendent why recovery dropped and what you propose to do.'},{es:'Describe un problema real de tu planta, su causa y la solución.',en:'Describe a real problem in your plant, its cause and the solution.'}]},
+{id:'b1u2',lv:'B1',t:'Procedimientos e instrucciones',en:'Walking through a procedure',
+ ctx:'Training a new operator on how to take a flotation sample safely.',
+ role:'Kevin, a new operator in training',me:'the experienced engineer training him',
+ goal:'Explica un procedimiento paso a paso, con seguridad.',focus:'Before / after / once · make sure · voz pasiva básica',
+ ch:[['Before you start, check that the area is clear.','Antes de empezar, revisa que el área esté despejada.'],['Make sure the lockout is in place.','Asegúrate de que el bloqueo esté puesto.'],['After that, open the valve slowly.','Después de eso, abre la válvula despacio.'],['The samples are taken every two hours.','Las muestras se toman cada dos horas.'],['The results are sent to the lab.','Los resultados se envían al laboratorio.'],['Don\'t forget to write down the time.','No olvides anotar la hora.'],['Once you finish, clean the sampler.','Cuando termines, limpia el muestreador.'],['Does that make sense?','¿Se entiende?']],
+ tasks:[{es:'Explica cómo tomar una muestra de pulpa paso a paso.',en:'Explain step by step how to take a slurry sample.'},{es:'Explica el procedimiento de bloqueo y etiquetado de una bomba.',en:'Explain the lockout and tagout procedure for a pump.'}]},
+{id:'b1u3',lv:'B1',t:'Experiencia profesional',en:'Talking about your experience',
+ ctx:'A conversation with a visiting consultant about the learner\'s experience in concentrators.',
+ role:'Linda, a visiting process consultant from Denver',me:'the plant metallurgist',
+ goal:'Habla de lo que has hecho y lo que aún no.',focus:'Presente perfecto · ever / never / already / yet · for / since',
+ ch:[['I\'ve worked in concentrators for three years.','He trabajado en concentradoras por tres años.'],['Have you ever operated a SAG mill?','¿Alguna vez has operado un molino SAG?'],['I\'ve never worked with molybdenum.','Nunca he trabajado con molibdeno.'],['We\'ve already changed the screen panels.','Ya cambiamos los paneles de la zaranda.'],['The lab hasn\'t sent the assays yet.','El laboratorio todavía no envía los ensayes.'],['I\'ve been in this area since last year.','Estoy en esta área desde el año pasado.'],['What was the biggest challenge?','¿Cuál fue el mayor desafío?'],['I learned a lot from that project.','Aprendí mucho de ese proyecto.']],
+ tasks:[{es:'Cuenta tu experiencia profesional y tu mayor aprendizaje.',en:'Talk about your professional experience and the most important thing you have learned.'},{es:'Cuenta un proyecto en el que participaste.',en:'Describe a project you have worked on.'}]},
+{id:'b1u4',lv:'B1',t:'Opiniones y sugerencias',en:'What do you think?',
+ ctx:'Two engineers discuss whether to increase the collector dosage after a drop in recovery.',
+ role:'Jason, another process engineer',me:'the plant metallurgist',
+ goal:'Da tu opinión, acepta o rechaza con cortesía y sugiere.',focus:'In my opinion · I agree / I\'m not sure · should · why don\'t we',
+ ch:[['In my opinion, we should reduce the feed.','En mi opinión, deberíamos bajar la alimentación.'],['I agree with you.','Estoy de acuerdo contigo.'],['I\'m not sure that is a good idea.','No estoy seguro de que sea buena idea.'],['What do you think about increasing the collector?','¿Qué opinas de subir el colector?'],['Why don\'t we try a lower dose first?','¿Por qué no probamos primero una dosis menor?'],['That makes sense.','Tiene sentido.'],['The problem is that it costs more.','El problema es que cuesta más.'],['Let\'s see what the data says.','Veamos qué dicen los datos.']],
+ tasks:[{es:'Da tu opinión: ¿conviene subir el tonelaje o moler más fino? Justifica.',en:'Give your opinion: should the plant increase throughput or grind finer? Explain why.'},{es:'Rechaza con cortesía una propuesta y sugiere otra.',en:'Politely disagree with a proposal and suggest an alternative.'}]},
+{id:'b1u5',lv:'B1',t:'Reunión de turno',en:'The morning meeting',
+ ctx:'The daily production meeting. The learner gives the update for the concentrator and answers questions.',
+ role:'Rachel, the production manager who leads the meeting',me:'the concentrator shift engineer',
+ goal:'Da un reporte breve, entiende preguntas y aclara.',focus:'Let me give you an update · so what you mean is · could you go over',
+ ch:[['Let me give you a quick update.','Les doy una actualización rápida.'],['Throughput was on target.','El tonelaje estuvo en meta.'],['We had one unplanned stop.','Tuvimos una parada no programada.'],['The main issue was the lime system.','El problema principal fue el sistema de cal.'],['Could you go over the numbers again?','¿Podrías repasar los números otra vez?'],['So what you mean is that we need more time.','O sea que lo que dices es que necesitamos más tiempo.'],['I\'ll look into it and get back to you.','Lo reviso y te respondo.'],['Any questions?','¿Alguna pregunta?']],
+ tasks:[{es:'Da el reporte del turno en la reunión diaria: tonelaje, recuperación, paradas y problema principal.',en:'Give the shift report in the daily meeting: throughput, recovery, stops and the main issue.'},{es:'Pide que te aclaren un dato y confirma lo que entendiste.',en:'Ask someone to clarify a number and confirm what you understood.'}]},
+{id:'b1u6',lv:'B1',t:'Entrevista de trabajo',en:'The job interview',
+ ctx:'A video interview for a process engineer position at a US mining company.',
+ role:'Karen, an HR recruiter',me:'a candidate for a process engineer job',
+ goal:'Responde preguntas básicas de entrevista con ejemplos.',focus:'My main responsibility is · I\'m good at · I\'d like to',
+ ch:[['I have a degree in metallurgical engineering.','Tengo el título de ingeniero metalúrgico.'],['My main responsibility is to control the flotation circuit.','Mi responsabilidad principal es controlar el circuito de flotación.'],['I\'m good at solving problems under pressure.','Soy bueno resolviendo problemas bajo presión.'],['I\'m looking for new challenges.','Busco nuevos desafíos.'],['I\'d like to work in the United States.','Me gustaría trabajar en Estados Unidos.'],['I can start next month.','Puedo empezar el próximo mes.'],['Could you tell me more about the team?','¿Podría contarme más sobre el equipo?'],['Thank you for your time.','Gracias por su tiempo.']],
+ tasks:[{es:'Responde: "Tell me about yourself".',en:'Answer the interview question: Tell me about yourself.'},{es:'Responde: "Why do you want to work for us?".',en:'Answer the interview question: Why do you want to work for our company?'}]},
+/* ---------------- B2 ---------------- */
+{id:'b2u1',lv:'B2',t:'Discusión técnica con datos',en:'Reading the data',
+ ctx:'A technical review of a month of plant data: recovery versus grind size, clay content and reagent use.',
+ role:'Dr. Patel, the corporate metallurgist',me:'the site metallurgist',
+ goal:'Interpreta datos, señala relaciones y límites del análisis.',focus:'The data suggests · compared to · correlation · that said',
+ ch:[['The data suggests that recovery is sensitive to grind size above one hundred eighty microns.','Los datos sugieren que la recuperación es sensible al tamaño de molienda sobre ciento ochenta micrones.'],['Compared to last month, reagent consumption is up twelve percent.','Comparado con el mes pasado, el consumo de reactivos subió doce por ciento.'],['There is a strong correlation between clay content and froth stability.','Hay una fuerte correlación entre el contenido de arcillas y la estabilidad de la espuma.'],['That said, the sample size is quite small.','Dicho eso, el tamaño de la muestra es bastante pequeño.'],['We can\'t rule out an instrument error.','No podemos descartar un error de instrumento.'],['The trend is clear, but the cause isn\'t.','La tendencia es clara, pero la causa no.'],['I\'d take these numbers with a grain of salt.','Tomaría estos números con pinzas.'],['Let me break it down for you.','Déjame explicártelo por partes.']],
+ tasks:[{es:'Explica qué dicen los datos del mes: recuperación, P80 y reactivos, y qué límites tiene el análisis.',en:'Explain what last month\'s data shows about recovery, grind size and reagents, and the limits of the analysis.'},{es:'Defiende una hipótesis sobre por qué cayó la ley, con evidencia.',en:'Defend a hypothesis about why concentrate grade dropped, using evidence.'}]},
+{id:'b2u2',lv:'B2',t:'Negociar con mantenimiento',en:'Negotiating the shutdown',
+ ctx:'Maintenance wants a 48-hour stop of the SAG mill; production needs the mill back by Friday.',
+ role:'Greg, the maintenance superintendent, under pressure from his own manager',me:'the production engineer',
+ goal:'Negocia una solución que funcione para ambos.',focus:'I understand your point, but · would it be possible · what if · I\'m willing to',
+ ch:[['I understand your point, but production needs the mill back by Friday.','Entiendo tu punto, pero producción necesita el molino el viernes.'],['Would it be possible to do the inspection during the planned stop?','¿Sería posible hacer la inspección durante la parada programada?'],['What if we split the job into two shifts?','¿Y si dividimos el trabajo en dos turnos?'],['I\'m willing to compromise on the timing.','Estoy dispuesto a ceder en los tiempos.'],['That\'s a deal breaker for us.','Eso para nosotros no es negociable.'],['Let\'s put it in writing.','Pongámoslo por escrito.'],['Where do we go from here?','¿Cómo seguimos desde aquí?'],['I think we can meet halfway.','Creo que podemos llegar a un punto medio.']],
+ tasks:[{es:'Negocia con mantenimiento la fecha de la parada del molino.',en:'Negotiate the date of the mill shutdown with the maintenance superintendent.'},{es:'Propón una alternativa cuando te dicen que no.',en:'Propose an alternative after your first request is rejected.'}]},
+{id:'b2u3',lv:'B2',t:'Presentar resultados',en:'Presenting a plant trial',
+ ctx:'The learner presents the results of a new collector trial to the technical team.',
+ role:'Michelle, the technical services manager, who asks sharp questions',me:'the engineer presenting the trial',
+ goal:'Presenta un resultado con estructura y responde preguntas.',focus:'Walk you through · as you can see · to sum up · signposting',
+ ch:[['Today I\'m going to walk you through the results of the collector trial.','Hoy les voy a presentar los resultados de la prueba de colector.'],['As you can see on this chart, recovery improved by two points.','Como ven en este gráfico, la recuperación mejoró dos puntos.'],['Let me draw your attention to the cost per tonne.','Quiero llamar su atención sobre el costo por tonelada.'],['This brings me to my next point.','Esto me lleva a mi siguiente punto.'],['To sum up, the trial was a success.','En resumen, la prueba fue un éxito.'],['We recommend a full-scale test next month.','Recomendamos una prueba a escala completa el próximo mes.'],['That\'s a great question.','Muy buena pregunta.'],['I\'d be happy to take any questions.','Con gusto respondo preguntas.']],
+ tasks:[{es:'Presenta en un minuto los resultados de una prueba en planta.',en:'Present the results of a plant trial in about one minute.'},{es:'Responde una pregunta difícil sobre tu presentación.',en:'Answer a challenging question about your results.'}]},
+{id:'b2u4',lv:'B2',t:'Hipótesis y escenarios',en:'What if?',
+ ctx:'Planning for scenarios: harder ore next year, lower copper price, a second filter.',
+ role:'Steve, the planning engineer',me:'the plant metallurgist',
+ goal:'Habla de escenarios reales e hipotéticos y del pasado que pudo ser distinto.',focus:'Segundo y tercer condicional · suppose · assuming · I wish',
+ ch:[['If we had a second filter, we wouldn\'t be limited by moisture.','Si tuviéramos un segundo filtro, no estaríamos limitados por la humedad.'],['If we had changed the apexes earlier, we wouldn\'t have lost recovery.','Si hubiéramos cambiado los ápex antes, no habríamos perdido recuperación.'],['Suppose the copper price drops, what would we do?','Supongamos que baja el precio del cobre, ¿qué haríamos?'],['Assuming the ore gets harder, we will need more grinding power.','Asumiendo que el mineral se ponga más duro, vamos a necesitar más potencia de molienda.'],['I wish we had more data.','Ojalá tuviéramos más datos.'],['In the worst case, we would lose two weeks.','En el peor caso, perderíamos dos semanas.'],['It depends on how hard the ore is.','Depende de qué tan duro sea el mineral.'],['Let\'s plan for both scenarios.','Planifiquemos para ambos escenarios.']],
+ tasks:[{es:'Explica qué harías si el mineral fuera 30 % más duro el próximo año.',en:'Explain what you would do if the ore were thirty percent harder next year.'},{es:'Cuenta un error del pasado y qué habría pasado si se hubiera actuado distinto.',en:'Describe a past mistake and what would have happened if the team had acted differently.'}]},
+{id:'b2u5',lv:'B2',t:'Reportar un incidente',en:'Incident investigation',
+ ctx:'Investigation interview after a near miss: a pump guard was removed and the pump was not isolated.',
+ role:'Angela, the HSE investigator',me:'the area engineer',
+ goal:'Reporta hechos con precisión, lo que otros dijeron y las acciones correctivas.',focus:'Estilo indirecto · voz pasiva · should have',
+ ch:[['The operator said that he had isolated the pump.','El operador dijo que había aislado la bomba.'],['It was reported that the guard had been removed.','Se reportó que se había retirado la guarda.'],['The area should have been barricaded.','El área debió estar barricada.'],['Nobody was injured, but it was a close call.','Nadie se lesionó, pero estuvo cerca.'],['Corrective actions have been assigned to each area.','Se asignaron acciones correctivas a cada área.'],['We need to make sure this doesn\'t happen again.','Tenemos que asegurarnos de que no vuelva a pasar.'],['According to the log, the pump was restarted at noon.','Según el registro, la bomba se reinició al mediodía.'],['I can\'t confirm that yet.','Todavía no puedo confirmarlo.']],
+ tasks:[{es:'Reporta un casi accidente: hechos, lo que dijeron los involucrados y acciones correctivas.',en:'Report a near miss: the facts, what the people involved said and the corrective actions.'},{es:'Explica qué se debió hacer distinto.',en:'Explain what should have been done differently.'}]},
+{id:'b2u6',lv:'B2',t:'Small talk y cultura laboral',en:'Small talk at work',
+ ctx:'Small talk with American coworkers at lunch on a Monday: weekend, sports, weather, family.',
+ role:'Jake, an American coworker who loves football and hiking',me:'a Peruvian engineer who just moved to Arizona',
+ goal:'Conversa con naturalidad y mantén la charla.',focus:'Preguntas de seguimiento · respuestas con detalle · expresiones americanas',
+ ch:[['How was your weekend?','¿Qué tal tu fin de semana?'],['Not bad, I went hiking with my family.','Nada mal, fui de caminata con mi familia.'],['Are you into football?','¿Te gusta el fútbol americano?'],['I\'m still getting used to the heat here.','Todavía me estoy acostumbrando al calor de aquí.'],['Let\'s grab lunch sometime.','Almorcemos juntos un día de estos.'],['That sounds great.','Suena genial.'],['No worries, it happens.','No te preocupes, pasa.'],['What do you guys usually do on weekends?','¿Qué suelen hacer ustedes los fines de semana?']],
+ tasks:[{es:'Cuenta tu fin de semana con detalles y pregunta por el de tu compañero.',en:'Tell a coworker about your weekend with some details and ask about theirs.'},{es:'Habla de las diferencias entre trabajar en Perú y en Estados Unidos.',en:'Talk about the differences between working in Peru and in the United States.'}]},
+/* ---------------- C1 ---------------- */
+{id:'c1u1',lv:'C1',t:'Matizar y ser preciso',en:'Hedging and precision',
+ ctx:'A technical review where the learner must state conclusions carefully, without overclaiming.',
+ role:'Dr. Hughes, a skeptical senior consultant',me:'the lead metallurgist',
+ goal:'Expresa grados de certeza y distingue causa de correlación.',focus:'Hedging · it\'s fair to say · to a large extent · strictly speaking',
+ ch:[['It\'s fair to say that the new liners have had a positive impact.','Es justo decir que los nuevos forros han tenido un impacto positivo.'],['There is some evidence to suggest that clay is the main driver.','Hay cierta evidencia que sugiere que la arcilla es el factor principal.'],['I\'d be inclined to wait for another week of data.','Me inclinaría por esperar otra semana de datos.'],['To a large extent, the issue is operational rather than metallurgical.','En gran medida, el problema es operativo más que metalúrgico.'],['Strictly speaking, that isn\'t a root cause.','En sentido estricto, eso no es una causa raíz.'],['I wouldn\'t go so far as to say it failed.','No llegaría a decir que fracasó.'],['The jury is still out on that.','Eso todavía no está claro.'],['What we can say with confidence is that grind size matters.','Lo que sí podemos decir con seguridad es que el tamaño de molienda importa.']],
+ tasks:[{es:'Presenta una conclusión técnica con el nivel de certeza correcto y responde a un escéptico.',en:'State a technical conclusion with the right degree of certainty and respond to a skeptic.'},{es:'Explica la diferencia entre correlación y causa con un ejemplo de tu planta.',en:'Explain the difference between correlation and causation using an example from your plant.'}]},
+{id:'c1u2',lv:'C1',t:'Liderar una reunión',en:'Running the meeting',
+ ctx:'The learner chairs a cross-functional meeting with maintenance, mine planning and the lab, with competing priorities.',
+ role:'several participants who interrupt, digress and disagree (play them all, naming who speaks)',me:'the meeting chair',
+ goal:'Dirige: da la palabra, corta digresiones, resume y asigna acciones.',focus:'Turn-taking · let\'s not get sidetracked · circle back · action items',
+ ch:[['Let\'s get started, we have a lot to cover.','Empecemos, tenemos mucho que ver.'],['I\'d like to hear from maintenance first.','Quisiera escuchar primero a mantenimiento.'],['Let\'s not get sidetracked; we can take that offline.','No nos desviemos; eso lo vemos aparte.'],['Can we circle back to the budget question?','¿Podemos volver al tema del presupuesto?'],['Just to make sure we\'re on the same page.','Solo para asegurarnos de que estamos de acuerdo.'],['Who is going to own this?','¿Quién se va a hacer cargo de esto?'],['Let\'s wrap up with the action items.','Cerremos con los compromisos.'],['I appreciate everyone\'s input.','Agradezco los aportes de todos.']],
+ tasks:[{es:'Abre la reunión, presenta la agenda y da la palabra.',en:'Open a meeting, present the agenda and hand over to the first speaker.'},{es:'Cierra la reunión: resume los acuerdos y asigna responsables y fechas.',en:'Close a meeting: summarize the decisions and assign owners and deadlines.'}]},
+{id:'c1u3',lv:'C1',t:'Caso de negocio para gerencia',en:'Pitching to senior management',
+ ctx:'Asking the general manager for approval of a 4-million-dollar flotation upgrade.',
+ role:'Robert, the general manager, who cares about payback, risk and safety',me:'the metallurgical engineer leading the project',
+ goal:'Convence con números, riesgos y una petición clara.',focus:'The bottom line · payback · mitigate · I\'d argue that',
+ ch:[['The bottom line is that this project pays back in under eighteen months.','En resumen, este proyecto se paga en menos de dieciocho meses.'],['The key risk is ore variability, which we can mitigate with blending.','El riesgo clave es la variabilidad del mineral, que podemos mitigar con mezclas.'],['We\'re asking for approval to move forward with phase one.','Pedimos aprobación para avanzar con la fase uno.'],['I\'d argue that doing nothing is the riskier option.','Yo diría que no hacer nada es la opción más riesgosa.'],['Let me put that into perspective.','Déjeme ponerlo en perspectiva.'],['Two points of recovery are worth about nine million dollars a year.','Dos puntos de recuperación valen unos nueve millones de dólares al año.'],['We\'ve stress-tested the numbers.','Hemos sometido los números a pruebas de estrés.'],['If it doesn\'t deliver, we can scale it back.','Si no da resultados, podemos reducirlo.']],
+ tasks:[{es:'Presenta en dos minutos un proyecto de mejora a gerencia con beneficio, costo, riesgo y petición.',en:'Pitch an improvement project to senior management in about two minutes: benefit, cost, risk and your request.'},{es:'Responde a la objeción: "We don\'t have the budget this year".',en:'Respond to the objection: We don\'t have the budget this year.'}]},
+{id:'c1u4',lv:'C1',t:'Desacuerdo y preguntas difíciles',en:'Handling pushback',
+ ctx:'A tense review in which the learner\'s analysis is challenged by a senior manager in front of the team.',
+ role:'Diane, the VP of operations, direct and impatient',me:'the engineer whose analysis is challenged',
+ goal:'Sostén tu posición con respeto, reconoce lo válido y no te comprometas a lo que no puedes.',focus:'I take your point · with all due respect · let me address that · I\'m not in a position to',
+ ch:[['I take your point, but I see it differently.','Entiendo su punto, pero lo veo distinto.'],['With all due respect, the numbers don\'t support that conclusion.','Con todo respeto, los números no respaldan esa conclusión.'],['That\'s a fair question; let me address it directly.','Es una pregunta justa; déjeme responderla directamente.'],['I\'m not in a position to commit to that today.','No estoy en condiciones de comprometerme a eso hoy.'],['Let me get back to you on that.','Le respondo eso más tarde.'],['You have a point there.','En eso tiene razón.'],['Where I\'d push back is on the timeline.','Donde no estoy de acuerdo es en el plazo.'],['Can we agree on what we would need to see to change our minds?','¿Podemos acordar qué tendríamos que ver para cambiar de opinión?']],
+ tasks:[{es:'Defiende tu análisis frente a una crítica fuerte, con respeto y datos.',en:'Defend your analysis against strong criticism, respectfully and with data.'},{es:'Responde una pregunta para la que no tienes la respuesta completa.',en:'Respond to a question you cannot fully answer yet.'}]},
+{id:'c1u5',lv:'C1',t:'Idioms y lo que no se dice',en:'Reading between the lines',
+ ctx:'An informal debrief after a difficult week, full of idioms, irony and things implied rather than said.',
+ role:'Mark, a sarcastic but kind American senior engineer',me:'his colleague',
+ goal:'Entiende y usa idioms y lenguaje implícito.',focus:'Idioms frecuentes · ironía · understatement',
+ ch:[['We\'re back to square one.','Volvimos a fojas cero.'],['Let\'s play it by ear.','Vamos viendo sobre la marcha.'],['That was a close call.','Estuvo cerca.'],['We need to get everyone on board.','Tenemos que lograr que todos se sumen.'],['It\'s not rocket science, but it takes discipline.','No es nada del otro mundo, pero requiere disciplina.'],['The ball is in their court.','La pelota está en su cancha.'],['Well, that went great, didn\'t it?','Bueno, eso salió genial, ¿no? (con ironía)'],['I\'ll believe it when I see it.','Lo creeré cuando lo vea.']],
+ tasks:[{es:'Cuenta una semana difícil usando al menos tres idioms.',en:'Talk about a difficult week at work using at least three idioms naturally.'},{es:'Explica qué quiso decir realmente alguien que habló con ironía.',en:'Explain what someone really meant when they said something ironic.'}]},
+{id:'c1u6',lv:'C1',t:'Entrevista avanzada (STAR)',en:'The behavioral interview',
+ ctx:'A final-round behavioral interview for a senior metallurgist position in Arizona.',
+ role:'Christine, the hiring manager, who asks probing follow-up questions',me:'the candidate',
+ goal:'Responde con el método STAR y sostén las repreguntas.',focus:'Situation, task, action, result · looking back · lessons learned',
+ ch:[['Tell me about a time you solved a difficult problem.','Cuénteme de una vez en que resolvió un problema difícil.'],['The situation was a sudden drop in recovery.','La situación fue una caída repentina de la recuperación.'],['My task was to find the root cause within one shift.','Mi tarea era encontrar la causa raíz en un turno.'],['I organized a sampling campaign and ran the numbers.','Organicé una campaña de muestreo y analicé los números.'],['As a result, we recovered three points within a week.','Como resultado, recuperamos tres puntos en una semana.'],['Looking back, I\'d have involved maintenance earlier.','En retrospectiva, habría involucrado antes a mantenimiento.'],['What I took away from it was the value of good data.','Lo que me llevé de eso fue el valor de tener buenos datos.'],['I thrive in environments where I can take ownership.','Me desempeño mejor donde puedo hacerme cargo.']],
+ tasks:[{es:'Responde con STAR: "Tell me about a time you disagreed with your boss".',en:'Answer using the STAR method: Tell me about a time you disagreed with your manager.'},{es:'Responde con STAR: "Tell me about a failure and what you learned".',en:'Answer using the STAR method: Tell me about a failure and what you learned from it.'}]}
+];
+
+/* ---------- sonidos difíciles para hispanohablantes ---------- */
+const PAIRS=[
+ {id:'ii',t:'/iː/ larga y /ɪ/ corta',es:'En español solo hay una i. En inglés, "sheep" (oveja) tiene una i larga y tensa; "ship" (barco) una i corta y relajada, casi entre i y e.',
+  p:[['sheep','ship'],['leave','live'],['feet','fit'],['seat','sit'],['heat','hit'],['steel','still'],['feel','fill']]},
+ {id:'bv',t:'/b/ y /v/',es:'En inglés son sonidos distintos: la v se hace con los dientes de arriba sobre el labio de abajo, vibrando.',
+  p:[['berry','very'],['ban','van'],['best','vest'],['boat','vote'],['bet','vet'],['curb','curve']]},
+ {id:'sh',t:'/ʃ/ y /tʃ/',es:'"Sh" es un sonido continuo, como pedir silencio. "Ch" es un golpe, como en "chancado".',
+  p:[['ship','chip'],['share','chair'],['wash','watch'],['shoes','choose'],['sheet','cheat'],['cash','catch']]},
+ {id:'th',t:'"th" de think y de this',es:'La lengua sale un poco entre los dientes. No es t ni s.',
+  p:[['three','tree'],['think','sink'],['thank','tank'],['thin','tin'],['both','boat'],['they','day']]},
+ {id:'ae',t:'/æ/ de cat y /ʌ/ de cut',es:'"Cat" abre mucho la boca, entre a y e. "Cut" es una a corta y relajada.',
+  p:[['cat','cut'],['cap','cup'],['bag','bug'],['ran','run'],['match','much'],['hat','hut']]},
+ {id:'yj',t:'/j/ de yes y /dʒ/ de job',es:'La y inglesa es suave, como una i rápida. La j inglesa es fuerte, como "ch" con voz.',
+  p:[['yet','jet'],['yellow','jello'],['yolk','joke'],['mayor','major'],['use','juice']]},
+ {id:'sz',t:'/s/ y /z/ zumbada',es:'La z inglesa vibra como una abeja. En español casi no existe.',
+  p:[['rice','rise'],['price','prize'],['loose','lose'],['peace','peas'],['bus','buzz'],['place','plays']]},
+ {id:'sc',t:'s inicial sin "e"',es:'No digas "es-teel". Empieza directo con la s: steel, screen, spare.',
+  w:['steel','screen','spare','stop','school','spray','start','sludge','slurry','sample']},
+ {id:'ed',t:'Terminaciones -ed',es:'"-ed" suena /t/ después de p, k, s, sh, ch (stopped), /d/ después de sonidos sonoros (cleaned) y /ɪd/ solo después de t y d (started).',
+  w:['stopped','checked','fixed','cleaned','filled','planned','started','loaded','needed','tested']},
+ {id:'ft',t:'La t americana suave (flap)',es:'Entre vocales, la t americana suena casi como una r suave del español: water ≈ "wa-rer".',
+  w:['water','metal','better','matter','settle','meter','little','bottom','total','city']}
+];
+
+/* ---------- escucha con voces reales ---------- */
+const RESOURCES=[
+ {lv:'A1–B1',n:'VOA Learning English',u:'https://learningenglish.voanews.com/',d:'Noticias y podcasts en inglés americano, leídos más despacio y con vocabulario controlado.'},
+ {lv:'Todos',n:'Rachel\'s English (YouTube)',u:'https://www.youtube.com/@rachelsenglish',d:'Pronunciación americana: sonidos, ritmo, reducciones y la t suave.'},
+ {lv:'B2–C1',n:'Podcasts de minería (lista de Mining Digital)',u:'https://miningdigital.com/top10/Top-10-mining-podcasts-to-follow-in-2023',d:'Conversaciones reales de la industria a velocidad nativa, con vocabulario técnico.'}
+];
+/* ====================== NÚCLEO ====================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const DAY=86400000;
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmt(x,d=0){if(x==null||!isFinite(x))return '—';const s=Math.abs(x).toFixed(d);let [i,f]=s.split('.');i=i.replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (x<0&&Number(s)!==0?'−':'')+i+(f?','+f:'');}
+function lsGet(k,def){try{const v=localStorage.getItem(k);return v==null?def:JSON.parse(v);}catch(e){return def;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+
+/* ---------- normalización de lo dicho ---------- */
+const ONES=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+const TENS=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+function n2w(n){
+  n=Math.floor(n);if(n<20)return ONES[n];
+  if(n<100)return TENS[Math.floor(n/10)]+(n%10?' '+ONES[n%10]:'');
+  if(n<1000)return ONES[Math.floor(n/100)]+' hundred'+(n%100?' '+n2w(n%100):'');
+  for(const [v,w] of [[1e9,'billion'],[1e6,'million'],[1e3,'thousand']])if(n>=v)return n2w(Math.floor(n/v))+' '+w+(n%v?' '+n2w(n%v):'');
+  return String(n);
+}
+const ORD={'1st':'first','2nd':'second','3rd':'third','4th':'fourth','5th':'fifth','6th':'sixth','7th':'seventh','8th':'eighth','9th':'ninth','10th':'tenth'};
+const CONTR=[[/\bcan't\b/g,'can not'],[/\bcannot\b/g,'can not'],[/\bwon't\b/g,'will not'],[/\bshan't\b/g,'shall not'],[/\bain't\b/g,'is not'],[/n't\b/g,' not'],
+  [/\blet's\b/g,'let us'],[/'m\b/g,' am'],[/'re\b/g,' are'],[/'ve\b/g,' have'],[/'ll\b/g,' will'],[/'d\b/g,' would'],
+  [/\b(it|that|what|where|there|here|who|how|he|she)'s\b/g,'$1 is']];
+const EQUIV={dont:'do not',cant:'can not',isnt:'is not',arent:'are not',wasnt:'was not',werent:'were not',didnt:'did not',doesnt:'does not',havent:'have not',hasnt:'has not',couldnt:'could not',wouldnt:'would not',shouldnt:'should not',im:'i am',ive:'i have',youre:'you are',theyre:'they are',lets:'let us',thats:'that is',whats:'what is',theres:'there is',sometime:'some time',anytime:'any time',everyday:'every day',alright:'all right',tonnes:'tons',tonne:'ton',okay:'ok','o.k.':'ok',gonna:'going to',wanna:'want to',gotta:'got to',grey:'gray',metre:'meter',metres:'meters',litre:'liter',litres:'liters',centre:'center',per:'per',hrs:'hours',hr:'hour',mins:'minutes',min:'minutes'};
+function norm(s){
+  s=String(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[“”]/g,'"');
+  s=s.replace(/\ba\.m\./g,'am').replace(/\bp\.m\./g,'pm').replace(/\bu\.s\.a?\.?/g,'us').replace(/\bmr\./g,'mister').replace(/\bdr\./g,'doctor');
+  s=s.replace(/\$(\d[\d,]*(?:\.\d+)?)\s*(million|billion|thousand)?/g,(m,a,b)=>a+(b?' '+b:'')+' dollars');
+  s=s.replace(/(\d),(\d{3})/g,'$1$2').replace(/(\d),(\d{3})/g,'$1$2');
+  s=s.replace(/(\d+)\s*%/g,'$1 percent');
+  s=s.replace(/\b(\d{1,2}):(\d{2})\b/g,(m,h,mi)=>n2w(+h)+(+mi===0?'':(+mi<10?' oh '+n2w(+mi):' '+n2w(+mi))));
+  s=s.replace(/\b(\d+)(st|nd|rd|th)\b/g,(m)=>ORD[m]||m.replace(/\D/g,''));
+  s=s.replace(/\b(\d+)\.(\d+)\b/g,(m,a,b)=>n2w(+a)+' point '+b.split('').map(d=>ONES[+d]).join(' '));
+  s=s.replace(/\b\d+\b/g,m=>m.length>12?m:n2w(+m));
+  CONTR.forEach(([r,v])=>{s=s.replace(r,v);});
+  s=s.replace(/[-–—/]/g,' ').replace(/[^a-z0-9'\s]/g,' ').replace(/'/g,'');
+  let t=s.split(/\s+/).filter(Boolean).map(w=>EQUIV[w]||w).join(' ').split(' ');
+  const out=[];let letters=false;
+  for(const w of t){const single=w.length===1&&!/^[ai]$/.test(w);if(single&&letters)out[out.length-1]+=w;else{out.push(w);letters=single;}}
+  return out.join(' ').replace(/\bwi fi\b/g,'wifi').split(' ').filter(Boolean);
+}
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;const d=Array.from({length:m+1},(_,i)=>[i]);for(let j=1;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n];}
+function near(a,b){if(a===b)return true;if(Math.min(a.length,b.length)<4)return false;return lev(a,b)/Math.max(a.length,b.length)<=0.25;}
+/* alineación palabra a palabra entre lo esperado y lo dicho */
+function align(target,said){
+  const T=norm(target),H=norm(said),m=T.length,n=H.length;
+  const D=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)D[i][0]=i;for(let j=0;j<=n;j++)D[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){const c=T[i-1]===H[j-1]?0:near(T[i-1],H[j-1])?0.5:1;D[i][j]=Math.min(D[i-1][j]+1,D[i][j-1]+1,D[i-1][j-1]+c);}
+  const ops=[];let i=m,j=n;
+  while(i>0||j>0){
+    if(i>0&&j>0){const c=T[i-1]===H[j-1]?0:near(T[i-1],H[j-1])?0.5:1;if(D[i][j]===D[i-1][j-1]+c){ops.push({t:T[i-1],h:H[j-1],k:c===0?'ok':c===0.5?'near':'sub'});i--;j--;continue;}}
+    if(i>0&&D[i][j]===D[i-1][j]+1){ops.push({t:T[i-1],h:null,k:'miss'});i--;continue;}
+    ops.push({t:null,h:H[j-1],k:'extra'});j--;
+  }
+  ops.reverse();
+  const ok=ops.filter(o=>o.k==='ok').length,nr=ops.filter(o=>o.k==='near').length,ex=ops.filter(o=>o.k==='extra').length;
+  const score=m?clamp((ok+0.5*nr-0.5*Math.max(0,ex-1))/m,0,1):0;
+  return {ops,score,T,H};
+}
+function diffHTML(al){
+  return '<span class="diff">'+al.ops.map(o=>{
+    if(o.k==='ok')return `<span class="w ok">${esc(o.t)}</span>`;
+    if(o.k==='near')return `<span class="w near" title="Dijiste: ${esc(o.h)}">${esc(o.t)}</span>`;
+    if(o.k==='sub')return `<span class="w sub"><s>${esc(o.h)}</s> ${esc(o.t)}</span>`;
+    if(o.k==='miss')return `<span class="w miss">${esc(o.t)}</span>`;
+    return `<span class="w extra">+${esc(o.h)}</span>`;
+  }).join(' ')+'</span>';
+}
+function words(s){return norm(s).length;}
+
+/* ---------- estado y progreso ---------- */
+const BOX_DAYS=[0,1,3,7,16,35,80];
+const MASTER_BOX=4;
+function blankState(){return {v:2,name:'',unit:'a1u1',passed:{},srs:{},units:{},pairs:{},days:{},evals:[],custom:{},exams:{},rate:1,voice:'',voice2:'',listenFirst:true,session:{}};}
+let ST=Object.assign(blankState(),lsGet('cre_state',{}));
+['passed','srs','units','pairs','days','custom','exams','session'].forEach(k=>{if(!ST[k]||typeof ST[k]!=='object'||Array.isArray(ST[k]))ST[k]={};});
+if(!Array.isArray(ST.evals))ST.evals=[];
+const CLOUD={ref:null,busy:false,dirty:false,timer:0};
+function setSync(t){const e=$('#sync');if(e)e.textContent=t;}
+function save(now){
+  lsSet('cre_state',ST);
+  if(!CLOUD.ref)return;
+  CLOUD.dirty=true;
+  clearTimeout(CLOUD.timer);
+  CLOUD.timer=setTimeout(flushCloud,now?0:2500);
+}
+async function flushCloud(){
+  if(!CLOUD.ref||!CLOUD.dirty||CLOUD.busy)return;
+  CLOUD.busy=true;CLOUD.dirty=false;
+  try{await CLOUD.ref.set(JSON.parse(JSON.stringify(ST)));setSync('Guardado en tu cuenta');}
+  catch(e){setSync('Guardado en este navegador');}
+  CLOUD.busy=false;if(CLOUD.dirty)CLOUD.timer=setTimeout(flushCloud,2500);
+}
+function mergeState(o){
+  if(!o||typeof o!=='object')return;
+  ['name','unit','voice','voice2'].forEach(k=>{if(o[k]&&!ST[k])ST[k]=o[k];});
+  Object.entries(o.passed||{}).forEach(([k,v])=>{if(!ST.passed[k])ST.passed[k]=v;});
+  Object.entries(o.srs||{}).forEach(([k,v])=>{const c=ST.srs[k];if(!c||(v.n||0)>(c.n||0))ST.srs[k]=v;});
+  Object.entries(o.units||{}).forEach(([k,v])=>{const c=ST.units[k]||{};ST.units[k]={rp:Math.max(c.rp||0,v.rp||0),tk:Object.assign({},v.tk||{},c.tk||{}),ls:Math.max(c.ls||0,v.ls||0)};
+    Object.entries(v.tk||{}).forEach(([i,s])=>{ST.units[k].tk[i]=Math.max(s,(c.tk||{})[i]||0);});});
+  Object.entries(o.pairs||{}).forEach(([k,v])=>{const c=ST.pairs[k];if(!c||(v.n||0)>(c.n||0))ST.pairs[k]=v;});
+  Object.entries(o.days||{}).forEach(([k,v])=>{const c=ST.days[k];if(!c||(v.sec||0)>(c.sec||0))ST.days[k]=v;});
+  Object.entries(o.custom||{}).forEach(([k,v])=>{if(!ST.custom[k])ST.custom[k]=v;});
+  Object.entries(o.exams||{}).forEach(([k,v])=>{if(!ST.exams[k]||(v.length||0)>(ST.exams[k].length||0))ST.exams[k]=v;});
+  if(Array.isArray(o.evals)){const seen=new Set(ST.evals.map(e=>e.at));o.evals.forEach(e=>{if(!seen.has(e.at))ST.evals.push(e);});ST.evals.sort((a,b)=>a.at-b.at);ST.evals=ST.evals.slice(-60);}
+}
+async function initCloud(){
+  if(!(window.claude&&typeof window.claude.use==='function'))return;
+  try{
+    const user=await window.claude.use('user');const db=await window.claude.use('db');
+    if(!user||!db)return;
+    const id=await user.id();if(!id)return;
+    CLOUD.ref=db.doc('data/users/'+id+'/state');
+    const snap=await CLOUD.ref.get();
+    if(snap.exists)mergeState(snap.data());
+    setSync('Guardado en tu cuenta');save(true);
+    if(typeof rerender==='function')rerender();
+  }catch(e){CLOUD.ref=null;}
+}
+function dayRec(){const k=today();if(!ST.days[k])ST.days[k]={sec:0,spk:0,w:0,lis:0};return ST.days[k];}
+function noteSpoke(text){const d=dayRec();d.spk++;d.w+=words(text);save();}
+
+/* tiempo activo: cuenta solo con la página visible y actividad en el último minuto */
+let lastAct=Date.now();
+['pointerdown','keydown','input'].forEach(ev=>document.addEventListener(ev,()=>{lastAct=Date.now();},{passive:true}));
+setInterval(()=>{
+  if(document.visibilityState!=='visible')return;
+  if(Date.now()-lastAct>60000&&!TTS.speaking)return;
+  const d=dayRec();d.sec+=5;if(TTS.speaking)d.lis+=5;
+  if(d.sec%60===0)save();
+},5000);
+function totalSec(){return Object.values(ST.days).reduce((a,d)=>a+(d.sec||0),0);}
+function streak(){let n=0;const d=new Date();for(;;){const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const r=ST.days[k];if(r&&r.sec>=300)n++;else if(n>0||k!==today())break;d.setDate(d.getDate()-1);if(n>3650)break;}return n;}
+
+/* ---------- frases y repaso espaciado ---------- */
+function nameOf(){return (ST.name||'').trim()||'Alex';}
+function sub(s){return String(s).replace(/\{name\}/g,nameOf());}
+const CHUNKS={};
+UNITS.forEach(u=>u.ch.forEach((c,i)=>{CHUNKS[u.id+'-'+i]={id:u.id+'-'+i,en:c[0],es:c[1],u:u.id,lv:u.lv};}));
+function chunk(id){if(CHUNKS[id])return CHUNKS[id];const c=ST.custom[id];return c?{id,en:c.en,es:c.es,u:c.u||null,lv:c.lv||null,custom:true}:null;}
+function srsGet(id){return ST.srs[id]||{b:0,due:0,n:0,l:0};}
+function srsUpdate(id,ok){
+  const s=Object.assign({},srsGet(id));s.n=(s.n||0)+1;
+  if(ok){s.b=Math.min(BOX_DAYS.length-1,(s.b||0)+1);s.due=Date.now()+BOX_DAYS[s.b]*DAY-3600000;}
+  else{s.l=(s.l||0)+1;s.b=1;s.due=Date.now()+10*60000;}
+  ST.srs[id]=s;save();return s;
+}
+function dueCards(limit){
+  const now=Date.now();
+  return Object.keys(ST.srs).filter(id=>chunk(id)&&ST.srs[id].n>0&&ST.srs[id].due<=now).sort((a,b)=>ST.srs[a].due-ST.srs[b].due).slice(0,limit);
+}
+function newChunksFrom(uid,limit){
+  const order=UNITS.slice(UNITS.findIndex(u=>u.id===uid));
+  const out=[];
+  for(const u of order){for(let i=0;i<u.ch.length;i++){const id=u.id+'-'+i;if(!ST.srs[id]||!ST.srs[id].n){out.push(id);if(out.length>=limit)return out;}}}
+  return out;
+}
+
+/* ---------- dominio ---------- */
+function unitMastery(u){
+  const ch=u.ch.map((c,i)=>Math.min(MASTER_BOX,srsGet(u.id+'-'+i).b||0)/MASTER_BOX);
+  const chP=ch.reduce((a,b)=>a+b,0)/ch.length;
+  const r=ST.units[u.id]||{};
+  const tk=[0,1].map(i=>((r.tk||{})[i]||0)>=3?1:0).reduce((a,b)=>a+b,0)/2;
+  const rp=(r.rp||0)>=3?1:0;
+  const ls=Math.min(2,r.ls||0)/2;
+  return {total:0.5*chP+0.25*tk+0.15*rp+0.10*ls,chP,tk,rp,ls};
+}
+function levelMastery(lv){
+  const us=UNITS.filter(u=>u.lv===lv);
+  const m=us.reduce((a,u)=>a+unitMastery(u).total,0)/us.length;
+  return 0.8*m+(ST.passed[lv]?0.2:0);
+}
+function routeMastery(){return LEVELS.reduce((a,l)=>a+levelMastery(l.id),0)/LEVELS.length;}
+function currentLevel(){let lv=null;LEVELS.forEach(l=>{if(ST.passed[l.id])lv=l.id;});return lv;}
+function unitOf(id){return UNITS.find(u=>u.id===id)||UNITS[0];}
+function workUnit(){return unitOf(ST.unit);}
+
+/* ---------- voz: síntesis (escuchar) ---------- */
+const TTS={ok:'speechSynthesis' in window,voices:[],speaking:false,gen:0,checked:false,broken:false,unlocked:false};
+const VOICE_PREF=[/Google US English/i,/Ava/i,/Samantha/i,/Allison/i,/Aria/i,/Jenny/i,/Guy/i,/Michelle/i,/Christopher/i,/Eric/i,/Zira/i,/David/i,/Mark/i,/Alex/i,/Fred/i];
+function loadVoices(){
+  if(!TTS.ok)return;
+  try{TTS.voices=(speechSynthesis.getVoices()||[]).filter(v=>/^en[-_]US/i.test(v.lang));}catch(e){TTS.voices=[];}
+  TTS.voices.sort((a,b)=>{const ia=VOICE_PREF.findIndex(r=>r.test(a.name)),ib=VOICE_PREF.findIndex(r=>r.test(b.name));return (ia<0?99:ia)-(ib<0?99:ib);});
+  if(typeof onVoices==='function')onVoices();
+}
+if(TTS.ok){setTimeout(loadVoices,0);try{speechSynthesis.onvoiceschanged=loadVoices;}catch(e){}setTimeout(loadVoices,800);}
+function voiceBy(name,fallbackIdx){return TTS.voices.find(v=>v.name===name)||TTS.voices[fallbackIdx||0]||null;}
+function voiceA(){return voiceBy(ST.voice,0);}
+function voiceB(){const a=voiceA();if(ST.voice2){const v=TTS.voices.find(x=>x.name===ST.voice2);if(v)return v;}return TTS.voices.find(v=>a&&v.name!==a.name)||a;}
+function baseRate(){const lv=workUnit().lv;return (LEVELS[LV_IDX[lv]].rate)*(ST.rate||1);}
+function hush(){TTS.gen++;TTS.speaking=false;if(TTS.ok){try{speechSynthesis.cancel();}catch(e){}}setWave(false);}
+function splitSent(t){return String(t).match(/[^.!?]+[.!?]*["')\]]*\s*/g)||[String(t)];}
+/* lines: [{t, v:'A'|'B'}] → reproduce en orden; resuelve al terminar */
+function speakLines(lines,opts){
+  opts=opts||{};
+  return new Promise(resolve=>{
+    if(!TTS.ok){resolve(false);return;}
+    let busy=false;try{busy=speechSynthesis.speaking||speechSynthesis.pending;}catch(e){}
+    hush();const g=++TTS.gen;
+    const q=[];lines.forEach(l=>splitSent(sub(l.t)).forEach(s=>{if(s.trim())q.push({t:s.trim(),v:l.v||'A'});}));
+    let started=false;
+    const rate=clamp((opts.rate||baseRate())*(opts.slow?0.75:1),0.5,1.6);
+    const next=i=>{
+      if(g!==TTS.gen){resolve(false);return;}
+      if(i>=q.length){TTS.speaking=false;setWave(false);resolve(true);return;}
+      const u=new SpeechSynthesisUtterance(q[i].t);
+      u.lang='en-US';u.rate=rate;
+      try{const v=q[i].v==='B'?voiceB():voiceA();if(v)u.voice=v;}catch(e){}
+      u.onstart=()=>{started=true;TTS.checked=true;TTS.speaking=true;setWave(true);if(TTS.broken){TTS.broken=false;if(typeof onTTSBroken==='function')onTTSBroken();}};
+      u.onend=()=>next(i+1);
+      u.onerror=()=>next(i+1);
+      try{speechSynthesis.resume();speechSynthesis.speak(u);}catch(e){resolve(false);}
+    };
+    if(busy)setTimeout(()=>next(0),80);else next(0);
+    if(!TTS.checked)setTimeout(()=>{if(g===TTS.gen&&!started&&!TTS.checked){TTS.broken=true;hush();if(typeof onTTSBroken==='function')onTTSBroken();resolve(false);}},3500);
+  });
+}
+function speak(t,opts){return speakLines([{t,v:'A'}],opts);}
+function setWave(on){document.querySelectorAll('.wave').forEach(w=>w.classList.toggle('on',!!on));}
+
+/* ---------- voz: reconocimiento del navegador (opcional) ----------
+   Dentro de claude.ai el micrófono de la página está bloqueado; ahí se usa el dictado del teclado.
+   Si la página se abre en Chrome o Safari fuera de claude.ai, este botón usa el reconocimiento del navegador. */
+const SRC=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+let TOP=true;try{TOP=window.top===window.self;}catch(e){TOP=false;}
+const STT={ok:!!SRC&&TOP&&!lsGet('cre_stt_blocked',false),rec:null,active:false};
+function sttStart(box,onDone){
+  if(!STT.ok)return false;
+  try{
+    const r=new SRC();r.lang='en-US';r.interimResults=true;r.continuous=false;r.maxAlternatives=1;
+    const base=box.value?box.value.trim()+' ':'';
+    r.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;box.value=base+t;box.dispatchEvent(new Event('input'));};
+    r.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'||e.error==='audio-capture'){STT.ok=false;lsSet('cre_stt_blocked',true);}STT.active=false;onDone&&onDone(e.error);};
+    r.onend=()=>{STT.active=false;onDone&&onDone(null);};
+    STT.rec=r;STT.active=true;r.start();return true;
+  }catch(e){STT.ok=false;return false;}
+}
+function sttStop(){try{STT.rec&&STT.rec.stop();}catch(e){}}
+
+/* ---------- Claude ---------- */
+const AI={fn:null,ready:false,off:false,why:''};
+async function initAI(){
+  if(!(window.claude&&typeof window.claude.use==='function')){AI.ready=true;AI.why='Abre esta página en claude.ai para conversar y evaluar con Claude.';return;}
+  try{AI.fn=await window.claude.use('sample');}catch(e){AI.fn=null;}
+  AI.ready=true;
+  if(!AI.fn)AI.why='Claude no está disponible en esta vista.';
+  if(typeof rerender==='function')rerender();
+}
+function aiOn(){return !!AI.fn&&!AI.off;}
+function aiErr(e){
+  const c=e&&e.code;
+  if(['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(c)){AI.off=true;AI.why='No se dio permiso para usar Claude en esta página. Vuelve a abrirla y acepta el permiso para conversar y evaluar.';return AI.why;}
+  if(c==='rate_limited')return 'Claude recibió demasiadas solicitudes o llegaste a tu límite de uso. Intenta de nuevo en unos minutos.';
+  if(c==='session_expired')return 'Tu sesión venció. Vuelve a iniciar sesión en claude.ai.';
+  if(c==='invalid_json')return 'La respuesta de Claude llegó incompleta. Intenta de nuevo.';
+  if(c==='cancelled')return '';
+  return 'No se pudo completar la consulta a Claude. Intenta de nuevo.';
+}
+const PROFILE='The learner is a Spanish-speaking metallurgical engineer who works in a copper concentrator plant in Peru and wants to live and work in the United States. Target: American English, with a focus on listening and speaking.';
+function aiJSON(prompt,tier,opts){return AI.fn.json(prompt,Object.assign({modelTier:tier||'default'},opts||{}));}
+/* ====================== INTERFAZ ====================== */
+const ICON={
+ play:'<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',
+ mic:'<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+ kb:'<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>',
+ back:'<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>'
+};
+const SECS={A1:20,A2:40,B1:60,B2:90,C1:120};
+const TURNS={A1:6,A2:7,B1:8,B2:10,C1:12};
+const CEFR_RANK={A0:0,A1:1,A2:2,B1:3,B2:4,C1:5,C2:6};
+const UI={screen:'hoy',params:null};
+const UA=navigator.userAgent||'';
+const DEV=/Android/i.test(UA)?'android':(/iPhone|iPad|iPod/i.test(UA)||(/Macintosh/.test(UA)&&'ontouchend' in document))?'ios':/Windows/i.test(UA)?'win':/Mac/i.test(UA)?'mac':'other';
+const DICT={android:'Toca el recuadro y habla con el <b>micrófono del teclado</b> (Gboard en inglés de EE. UU.).',ios:'Toca el recuadro y habla con el <b>micrófono del teclado</b> (teclado en inglés de EE. UU.).',win:'Haz clic en el recuadro y presiona <b>Windows + H</b> para dictar en inglés.',mac:'Haz clic en el recuadro y usa la <b>tecla de dictado</b> (o doble Fn), con dictado en inglés.',other:'Toca el recuadro y usa el <b>dictado por voz</b> de tu teclado, en inglés.'};
+const DICT_HINT=`<div class="hint">${ICON.kb}<span>${DICT[DEV]}</span></div>`;
+
+function waveHTML(){return '<span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>';}
+function hdr(){
+  const lv=currentLevel();
+  const p=$('#hLevel');p.textContent=lv||'A0';p.className='pill'+(lv?'':' dim');p.title=lv?'Último examen aprobado: '+lv:'Aún no apruebas un examen de nivel';
+  const s=streak();$('#hStreak').textContent='Racha '+s+(s===1?' día':' días');
+  $('#hHours').textContent=fmt(totalSec()/3600,1)+' h';
+  document.querySelectorAll('#tabs button').forEach(b=>{const on=b.dataset.go===UI.screen||(UI.screen==='unidad'&&b.dataset.go==='ruta');b.setAttribute('aria-current',on?'page':'false');});
+}
+function banner(){
+  const b=$('#banner');const msgs=[];
+  if(!TTS.ok||TTS.broken)msgs.push('Esta vista no reproduce voz en inglés. Abre la página en Chrome (Android o computadora) o en Safari (iPhone) para escuchar el audio.');
+  else if(TTS.voices.length===0&&TTS.checked)msgs.push('No encontramos una voz de inglés americano en este dispositivo. Instala una en los ajustes de texto a voz del sistema.');
+  b.innerHTML=msgs.map(m=>`<div class="banner">${esc(m)}</div>`).join('');
+}
+function onTTSBroken(){banner();}
+function onVoices(){if(UI.screen==='ajustes')rerender();}
+function go(screen,params){
+  if(UI.leave){try{UI.leave();}catch(e){}UI.leave=null;}
+  hush();if(STT.active)sttStop();
+  UI.screen=screen;UI.params=params||null;
+  render();window.scrollTo(0,0);
+}
+function render(){hdr();banner();(SCREENS[UI.screen]||SCREENS.hoy)($('#main'),UI.params);}
+function rerender(){if(['hoy','ruta','unidad','sonidos','progreso','ajustes','hablar'].includes(UI.screen))render();else hdr();}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>go(b.dataset.go));
+$('#btnSettings').onclick=()=>go('ajustes');
+document.addEventListener('pointerdown',function unlock(){if(TTS.ok&&!TTS.unlocked){TTS.unlocked=true;try{const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);}catch(e){}}},{once:true});
+
+/* ---------- transmisión del usuario (caja de dictado) ---------- */
+function txHTML(id,ph,tall){
+  return `<div class="tx${tall?' tall':''}"><div class="eyebrow"><span>Tu transmisión</span>${STT.ok?`<button type="button" class="btn radio" id="${id}Mic" style="min-height:36px;padding:6px 12px">${ICON.mic}Hablar</button>`:''}</div>
+  <textarea id="${id}" placeholder="${esc(ph||'Toca aquí y habla en inglés')}" autocomplete="off" autocapitalize="sentences" spellcheck="false" aria-label="Lo que dices en inglés"></textarea>${DICT_HINT}</div>`;
+}
+function wireTx(id){
+  const box=document.getElementById(id);if(!box)return null;
+  const st={t0:0};
+  box.addEventListener('focus',()=>{if(!st.t0)st.t0=Date.now();});
+  box.addEventListener('input',()=>{if(!st.t0)st.t0=Date.now();});
+  const m=document.getElementById(id+'Mic');
+  if(m)m.onclick=()=>{
+    if(STT.active){sttStop();return;}
+    if(!st.t0)st.t0=Date.now();
+    m.textContent='Escuchando… toca para terminar';
+    const ok=sttStart(box,err=>{m.innerHTML=ICON.mic+'Hablar';if(err&&!STT.ok){m.remove();box.focus();}});
+    if(!ok){m.remove();box.focus();}
+  };
+  return {box,secs:()=>st.t0?Math.round((Date.now()-st.t0)/1000):0,reset:()=>{st.t0=0;box.value='';}};
+}
+function thinkingHTML(t){return `<span class="thinking"><i></i><i></i><i></i> ${esc(t||'Claude está pensando')}</span>`;}
+function needAI(){return `<div class="card flat"><p><b>Esta parte necesita a Claude.</b></p><p class="lead">${esc(AI.why||'Abre esta página en claude.ai y acepta el permiso para que Claude converse contigo y evalúe lo que dices.')}</p></div>`;}
+
+/* ====================== HOY ====================== */
+function session(){
+  const d=today();
+  if(!ST.session||ST.session.date!==d){
+    const order=PAIRS.slice().sort((a,b)=>((ST.pairs[a.id]||{}).n||0)-((ST.pairs[b.id]||{}).n||0));
+    ST.session={date:d,done:{},pair:order[0].id};save();
+  }
+  return ST.session;
+}
+function blocks(){
+  const s=session(),u=workUnit(),due=dueCards(12).length,nw=newChunksFrom(u.id,4).length,pr=PAIRS.find(p=>p.id===s.pair)||PAIRS[0];
+  const ai=aiOn();
+  return [
+    {k:'pron',t:'Calentamiento de sonidos',d:pr.t+' · 6 intentos',m:3},
+    {k:'review',t:'Repaso espaciado',d:due?(due===1?'1 frase que te toca hoy':due+' frases que te tocan hoy'):'Nada pendiente por ahora',m:due?Math.ceil(due*0.5):0,skip:!due},
+    {k:'new',t:'Frases nuevas',d:nw?nw+' frases de «'+unitOf(newChunksFrom(u.id,1)[0]?CHUNKS[newChunksFrom(u.id,1)[0]].u:u.id).t+'»':'Ya viste todas las frases de la ruta',m:4,skip:!nw},
+    {k:'listen',t:'Escucha activa',d:ai?'Audio nivel '+u.lv+' sobre «'+u.en+'» y preguntas que respondes hablando':'Cadena de frases para entrenar el oído',m:6},
+    {k:'talk',t:'Conversación',d:ai?'Role-play: '+u.role.split(',')[0]+' · '+u.en:'Tarea de habla con frases modelo',m:8}
+  ];
+}
+function runBlock(k){
+  const s=session(),u=workUnit();
+  const done=()=>{s.done[k]=true;save();go('hoy');};
+  if(k==='pron'){const pr=PAIRS.find(p=>p.id===s.pair)||PAIRS[0];runPractice(pairItems(pr),{title:pr.t,onDone:done});}
+  else if(k==='review'){const ids=dueCards(12);if(!ids.length){done();return;}runPractice(ids.map(cardItem),{title:'Repaso espaciado',onDone:done});}
+  else if(k==='new'){const ids=newChunksFrom(u.id,4);if(!ids.length){done();return;}runPractice(ids.map(id=>({k:'repeat',cid:id,en:CHUNKS[id].en,es:CHUNKS[id].es})),{title:'Frases nuevas',onDone:done});}
+  else if(k==='listen'){if(aiOn())go('escucha',{u:u.id,onDone:done});else runPractice(chainItems(u),{title:'Cadena de escucha',onDone:done});}
+  else if(k==='talk'){if(aiOn())go('chat',{u:u.id,onDone:done});else go('tarea',{u:u.id,i:0,onDone:done});}
+}
+function cardItem(id){const c=chunk(id),s=srsGet(id);return {k:(s.b||0)>=2?'produce':'repeat',cid:id,en:c.en,es:c.es};}
+function chainItems(u){
+  const pool=UNITS.filter(x=>LV_IDX[x.lv]<=LV_IDX[u.lv]).flatMap(x=>x.ch.map(c=>c));
+  return shuffle(pool).slice(0,10).reduce((a,c,i,arr)=>{if(i%2===0&&arr[i+1])a.push({k:'repeat',en:c[0]+' '+arr[i+1][0],es:c[1]+' '+arr[i+1][1]});return a;},[]);
+}
+const SCREENS={};
+SCREENS.hoy=(m)=>{
+  const s=session(),bl=blocks(),u=workUnit(),tot=routeMastery(),d=dayRec();
+  const first=!Object.values(ST.days).some(x=>x.spk>0);
+  const doneN=bl.filter(b=>s.done[b.k]||b.skip).length;
+  const dt=new Date().toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'});
+  m.innerHTML=`<div class="stack">
+  ${first?`<div class="card" style="border-color:var(--accent)"><span class="eyebrow">Antes de empezar</span><h2 style="margin:4px 0 8px">Aquí todo se responde hablando</h2>
+    <p>Cada vez que veas <b>Tu transmisión</b>, toca el recuadro y usa el micrófono de tu teclado para decir la frase en inglés. El sistema compara lo que entendió con lo esperado: si te entiende el dictado, te entiende una persona.</p>
+    <div class="how"><div><b>Android</b>Toca el micrófono del teclado (Gboard).</div><div><b>iPhone</b>Toca el micrófono del teclado. Si no aparece: Ajustes › General › Teclado › Activar dictado.</div><div><b>Windows</b>Tecla Windows + H dentro del recuadro.</div><div><b>Mac</b>Tecla de dictado o doble Fn.</div></div>
+    <p style="margin-top:10px"><b>Pon el teclado en inglés (Estados Unidos)</b> para dictar en inglés; si dictas en español, el sistema escribirá palabras en español.</p>
+    <button class="btn primary" type="button" id="tryIt">Probar con tu primera frase</button></div>`:''}
+  <div><span class="eyebrow">${esc(dt)}</span><h1>Turno de hoy</h1><p class="lead">Unos 25 minutos: oído, boca y repaso. Unidad de trabajo: <b>${esc(u.lv)} · ${esc(u.t)}</b>.</p></div>
+  <ol class="blocks">${bl.map((b,i)=>{const dn=s.done[b.k]||b.skip;return `<li class="${dn?'done':''}"><button type="button" data-b="${b.k}"><span class="n">${dn?'✓':i+1}</span><span><b>${esc(b.t)}</b><small>${esc(b.d)}</small></span><span class="chip${dn?' ok':''}">${s.done[b.k]?'Hecho':b.skip?'Al día':'~'+b.m+' min'}</span></button></li>`;}).join('')}</ol>
+  ${doneN===bl.length?'<div class="fb ok"><h3>Turno completo</h3><p>Si te queda energía, abre una conversación libre o una tarea de habla de tu unidad.</p></div>':''}
+  <div class="card"><div class="row" style="justify-content:space-between;align-items:flex-end"><div><span class="eyebrow">Ruta a C1</span><div class="big">${fmt(100*tot,2)} %</div></div>
+    <div class="small" style="text-align:right">Hoy: ${fmt(d.sec/60)} min · ${d.spk} frases dichas<br>Total: ${fmt(totalSec()/3600,1)} h activas</div></div>
+    ${trackHTML()}
+    <p class="small" style="margin:6px 0 0">Cambridge English estima unas 700 a 800 horas guiadas, en total desde cero, para llegar a C1. Lo que más acelera: practicar todos los días y escuchar inglés real fuera de la app.</p></div>
+  </div>`;
+  m.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>runBlock(b.dataset.b));
+  const t=$('#tryIt');if(t)t.onclick=()=>runPractice([{k:'repeat',cid:'a1u1-0',en:CHUNKS['a1u1-0'].en,es:CHUNKS['a1u1-0'].es},{k:'repeat',cid:'a1u1-1',en:CHUNKS['a1u1-1'].en,es:CHUNKS['a1u1-1'].es}],{title:'Primera transmisión',onDone:()=>go('hoy')});
+};
+function trackHTML(){
+  const cur=workUnit().lv;
+  return '<div class="track">'+LEVELS.map(l=>{const pm=levelMastery(l.id);return `<div class="${ST.passed[l.id]?'pass':''} ${l.id===cur?'cur':''}" title="${l.id}: ${fmt(100*pm)} %"><span class="f" style="height:${(100*pm).toFixed(1)}%"></span><b>${l.id}</b></div>`;}).join('')+'</div>';
+}
+
+/* ====================== PRÁCTICA (frases, sonidos) ====================== */
+const R={};
+function runPractice(items,opts){
+  Object.assign(R,{items,i:0,res:[],title:opts.title,onDone:opts.onDone,state:'ask',tries:0});
+  UI.screen='run';UI.params=null;hdr();banner();renderRun(true);window.scrollTo(0,0);
+}
+function pairItems(pr){
+  const out=[];
+  if(pr.p){
+    const ps=shuffle(pr.p);
+    for(let i=0;i<6;i++){const pp=ps[i%ps.length];const t=Math.random()<0.5?0:1;
+      out.push(i%2===0?{k:'pairL',pid:pr.id,a:pp[0],b:pp[1],tg:pp[t],ot:pp[1-t]}:{k:'pairS',pid:pr.id,a:pp[0],b:pp[1],tg:pp[t],ot:pp[1-t]});}
+  }else shuffle(pr.w).slice(0,6).forEach(w=>out.push({k:'word',pid:pr.id,tg:w}));
+  return out;
+}
+function playItem(it,slow){
+  if(it.k==='repeat'||it.k==='produce')return speak(it.en,{slow});
+  if(it.k==='pairL'||it.k==='pairS'||it.k==='word')return speak(it.tg,{slow,rate:0.85});
+  return Promise.resolve();
+}
+function renderRun(autoplay){
+  const m=$('#main'),it=R.items[R.i],n=R.items.length;
+  if(!it){return renderRunEnd(m);}
+  const asked=R.state==='ask';
+  let prompt='';
+  if(it.k==='repeat')prompt=`<span class="eyebrow">Transmisión entrante · escucha y repite en voz alta</span>
+    <div class="play"><button class="playbtn" type="button" id="pPlay" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}<button class="btn ghost" type="button" id="pSlow">Más lento</button></div>
+    <div class="cue en ${asked&&!R.peek?'hidden-text':''}" id="pText">${esc(sub(it.en))}</div>${asked&&!R.peek?'<button class="link" type="button" id="pPeek">No entiendo: ver el texto</button>':`<div class="es">${esc(sub(it.es))}</div>`}`;
+  else if(it.k==='produce')prompt=`<span class="eyebrow">Dilo en inglés</span><div class="cue">${esc(sub(it.es))}</div>
+    ${asked?(R.hint?`<div class="es">Empieza así: <b>${esc(sub(it.en).split(' ').slice(0,2).join(' '))}…</b></div>`:'<button class="link" type="button" id="pHint">Dame una pista</button>'):`<div class="play"><button class="playbtn" type="button" id="pPlay" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}<div class="cue en">${esc(sub(it.en))}</div></div>`}`;
+  else if(it.k==='pairL')prompt=`<span class="eyebrow">¿Qué palabra escuchas? Dila en voz alta</span>
+    <div class="play"><button class="playbtn" type="button" id="pPlay" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}<div class="cue en">${esc(it.a)} <span class="es">o</span> ${esc(it.b)}</div></div>`;
+  else if(it.k==='pairS')prompt=`<span class="eyebrow">Di esta palabra. El dictado debe escribir exactamente esta</span>
+    <div class="cue en" style="font-size:30px">${esc(it.tg)}</div><div class="es">No «${esc(it.ot)}». <button class="link" type="button" id="pPlay2">Escuchar modelo</button></div>`;
+  else if(it.k==='word')prompt=`<span class="eyebrow">Di esta palabra</span><div class="cue en" style="font-size:30px">${esc(it.tg)}</div><div class="es"><button class="link" type="button" id="pPlay2">Escuchar modelo</button></div>`;
+  m.innerHTML=`<div class="stack"><div class="runhead"><div><span class="eyebrow">${esc(R.title)}</span><h2>${R.i+1} de ${n}</h2></div><button class="btn ghost" type="button" id="rExit">${ICON.back}Salir</button></div>
+  <div class="prog"><span style="width:${(100*R.i/n).toFixed(1)}%"></span></div>
+  <div class="incoming">${prompt}</div>
+  ${asked?txHTML('ans',it.k==='produce'?'Toca aquí y dilo en inglés':'Toca aquí y repite lo que escuchaste')+`<div class="row"><button class="btn primary" type="button" id="rSend">Transmitir</button><button class="btn ghost" type="button" id="rSkip">No sé</button></div>`:R.fbHTML}
+  </div>`;
+  $('#rExit').onclick=()=>{R.items=R.items.slice(0,R.i);renderRunEnd(m);};
+  const pp=$('#pPlay');if(pp)pp.onclick=()=>playItem(it,false);
+  const pp2=$('#pPlay2');if(pp2)pp2.onclick=()=>playItem(it,false);
+  const ps=$('#pSlow');if(ps)ps.onclick=()=>playItem(it,true);
+  const pk=$('#pPeek');if(pk)pk.onclick=()=>{R.peek=true;R.peeked=true;renderRun(false);};
+  const ph=$('#pHint');if(ph)ph.onclick=()=>{R.hint=true;renderRun(false);};
+  if(asked){
+    const tx=wireTx('ans');
+    $('#rSend').onclick=()=>{const v=tx.box.value.trim();if(!v){tx.box.focus();return;}judgeRun(it,v,tx.secs());};
+    $('#rSkip').onclick=()=>judgeRun(it,'',0);
+    if(autoplay&&(it.k==='repeat'||it.k==='pairL'))playItem(it,false);
+  }else{
+    const nx=$('#rNext');if(nx)nx.onclick=()=>{R.i++;R.state='ask';R.peek=false;R.peeked=false;R.hint=false;R.tries=0;renderRun(true);};
+    const rt=$('#rRetry');if(rt)rt.onclick=()=>{R.state='ask';R.peek=it.k==='repeat';R.tries++;renderRun(false);};
+    const pm=$('#fbPlay');if(pm)pm.onclick=()=>playItem(it,false);
+  }
+}
+function verdict(score){return score>=0.85?['ok','Bien']:score>=0.6?['near','Casi']:['bad','Otra vez'];}
+async function judgeRun(it,said,secs){
+  if(said)noteSpoke(said);
+  let score=0,body='',k='bad',title='';
+  if(it.k==='repeat'||it.k==='produce'){
+    const al=align(sub(it.en),said);score=al.score;
+    [k,title]=verdict(score);
+    if(R.peeked&&k==='ok'){k='near';title='Bien, con el texto a la vista';}
+    body=`<div>${diffHTML(al)}</div><div class="legendw"><span><span class="w ok">bien</span></span><span><span class="w near">casi</span></span><span><span class="w miss">faltó</span></span><span><span class="w sub"><s>dicho</s> esperado</span></span></div>
+      <div class="cue en">${esc(sub(it.en))}</div><div class="es">${esc(sub(it.es))}</div>`;
+    if(it.k==='produce'&&score>=0.4&&score<0.85&&aiOn()&&said){
+      R.state='fb';R.fbHTML=`<div class="fb near">${thinkingHTML('Claude revisa si tu frase también es correcta')}</div>`;renderRun(false);
+      try{
+        const j=await aiJSON(`An English learner (Spanish speaker) was asked to say in English: "${sub(it.es)}". The reference answer is: "${sub(it.en)}". The learner said (speech-to-text transcript, ignore punctuation and capitalization): "${said}".\nIs the learner's sentence a correct and natural way to say it in American English, with the same meaning? Reply with only JSON: {"ok": true or false, "better": "a natural correct version close to what the learner said", "why_es": "one short sentence in Spanish"}`,'quick');
+        if(j&&j.ok===true){k='ok';title='Bien: otra forma correcta';score=Math.max(score,0.86);}
+        body+=`<div class="fix">${j&&j.ok?'<b>Tu versión es válida.</b> ':''}${esc(j&&j.why_es||'')}${j&&j.better?`<br><b>${esc(j.better)}</b>`:''}</div>`;
+      }catch(e){const t=aiErr(e);if(t)body+=`<p class="small">${esc(t)}</p>`;}
+    }
+  }else{
+    const toks=norm(said),tg=it.tg.toLowerCase(),ot=(it.ot||'').toLowerCase();
+    const hasT=toks.includes(tg),hasO=ot&&toks.includes(ot);
+    score=hasT&&!hasO?1:0;k=score?'ok':'bad';
+    title=score?'Bien':'Otra vez';
+    const heard=said?`El dictado escribió: «${esc(said)}».`:'No hubo respuesta.';
+    if(it.k==='pairL')body=`<p>${heard} La palabra era <b>${esc(it.tg)}</b>.</p><p class="es">${hasO?'Escuchaste o pronunciaste la otra palabra del par. Escucha las dos varias veces y fíjate en la diferencia.':''}</p>`;
+    else body=`<p>${heard} ${score?'Se entendió la palabra correcta.':'Se esperaba <b>'+esc(it.tg)+'</b>.'}</p>${!score?`<p class="es">${esc((PAIRS.find(p=>p.id===it.pid)||{}).es||'')}</p>`:''}`;
+    if(it.k==='pairL'||it.k==='pairS'){const pr=it.k==='pairL'?[it.tg,it.ot]:[it.a,it.b];body+=`<div class="row"><button class="btn radio" type="button" data-say="${esc(pr[0])}">${esc(pr[0])}</button><button class="btn radio" type="button" data-say="${esc(pr[1])}">${esc(pr[1])}</button></div>`;}
+    const ps=ST.pairs[it.pid]||{n:0,ok:0};ps.n++;if(score)ps.ok++;ST.pairs[it.pid]=ps;save();
+  }
+  if(R.tries===0){
+    R.res.push({it,score,said});
+    if(it.cid)srsUpdate(it.cid,score>=0.85||(k==='ok'));
+  }
+  R.state='fb';
+  R.fbHTML=`<div class="fb ${k}"><h3>${esc(title)}${it.k==='repeat'||it.k==='produce'?' · '+fmt(100*score)+' %':''}</h3>${body}
+    <div class="row">${it.k==='repeat'||it.k==='produce'?`<button class="btn radio" type="button" id="fbPlay">${ICON.play}Escuchar</button>`:''}${k!=='ok'?'<button class="btn" type="button" id="rRetry">Intentar otra vez</button>':''}<button class="btn primary" type="button" id="rNext">${R.i+1<R.items.length?'Siguiente':'Terminar'}</button></div></div>`;
+  renderRun(false);
+  document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say,{rate:0.85}));
+}
+function renderRunEnd(m){
+  const ok=R.res.filter(r=>r.score>=0.85).length,n=R.res.length;
+  const miss=R.res.filter(r=>r.score<0.85&&r.it.en);
+  m.innerHTML=`<div class="stack"><span class="eyebrow">${esc(R.title)}</span><h1>${n?fmt(100*ok/n)+' % bien':'Sin intentos'}</h1>
+  <p class="lead">${ok} de ${n} transmisiones entendidas a la primera.${miss.length?' Estas vuelven en tu repaso:':''}</p>
+  ${miss.length?'<div class="plist">'+miss.map((r,i)=>`<div class="pitem"><button class="icon" type="button" data-p="${i}" aria-label="Escuchar">${ICON.play}</button><div><div class="en">${esc(sub(r.it.en))}</div><div class="es">${esc(sub(r.it.es||''))}</div></div><span class="box">${fmt(100*r.score)} %</span></div>`).join('')+'</div>':''}
+  <button class="btn primary wide" type="button" id="endOk">Continuar</button></div>`;
+  m.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>speak(miss[+b.dataset.p].it.en));
+  $('#endOk').onclick=()=>{const f=R.onDone;if(n&&f)f();else go('hoy');};
+  hdr();
+}
+
+/* ====================== RUTA y UNIDAD ====================== */
+SCREENS.ruta=(m)=>{
+  const cur=ST.unit;
+  m.innerHTML=`<div class="stack"><div><h1>Ruta A1 → C1</h1><p class="lead">Seis unidades por nivel, todas en tu mundo: la planta, el turno y la vida en Estados Unidos. Cada nivel termina con un examen que evalúa Claude.</p></div>
+  ${LEVELS.map(l=>{const us=UNITS.filter(u=>u.lv===l.id),pm=levelMastery(l.id),ex=ST.passed[l.id];
+    return `<section class="card stack"><div class="lvhead"><h2>${l.id} · ${esc(l.name)}</h2><span class="chip ${ex?'ok':''}">${ex?'Examen aprobado':fmt(100*pm)+' %'}</span></div>
+    <p class="lead" style="margin:0">${esc(l.can)}</p>
+    <div class="units">${us.map(u=>{const um=unitMastery(u).total;return `<button type="button" class="${u.id===cur?'cur':''}" data-u="${u.id}"><b>${esc(u.t)}</b><small>${esc(u.en)} · ${esc(u.focus)}</small><div class="meter"><span class="${um>=0.999?'full':''}" style="width:${(100*um).toFixed(1)}%"></span></div></button>`;}).join('')}</div>
+    <div class="row"><button class="btn${ex?'':' primary'}" type="button" data-x="${l.id}">${ex?'Repetir examen':'Examen de nivel '+l.id}</button><span class="small">Unas ${l.h} horas guiadas acumuladas para este nivel, según Cambridge English.</span></div></section>`;}).join('')}
+  <section class="card"><h3>Escucha voces reales</h3><p class="lead">La voz de la app es sintética. Para C1 necesitas también acentos, velocidad y ruido reales: 15 minutos diarios de alguno de estos.</p>
+  ${RESOURCES.map(r=>`<p><a href="${esc(r.u)}" target="_blank" rel="noopener">${esc(r.n)}</a> <span class="chip">${esc(r.lv)}</span><br><span class="small">${esc(r.d)}</span></p>`).join('')}</section></div>`;
+  m.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>go('unidad',{u:b.dataset.u}));
+  m.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>go('examen',{lv:b.dataset.x}));
+};
+SCREENS.unidad=(m,p)=>{
+  const u=unitOf(p&&p.u),um=unitMastery(u),r=ST.units[u.id]||{},isCur=ST.unit===u.id;
+  m.innerHTML=`<div class="stack"><button class="btn ghost" type="button" id="uBack" style="align-self:flex-start">${ICON.back}Ruta</button>
+  <div><span class="eyebrow">${u.lv} · ${esc(u.en)}</span><h1>${esc(u.t)}</h1><p class="lead">${esc(u.goal)}</p><p class="small">Enfoque: ${esc(u.focus)}</p></div>
+  <div class="row">${isCur?'<span class="chip acc">Tu unidad de trabajo</span>':'<button class="btn primary" type="button" id="uSet">Trabajar esta unidad en el turno diario</button>'}<span class="chip">${fmt(100*um.total)} % dominada</span></div>
+  <section class="card stack"><div class="lvhead"><h3>Frases de la unidad</h3><span class="small">Dominada = repasada con éxito en días distintos hasta un intervalo de 16 días</span></div>
+    <div class="plist">${u.ch.map((c,i)=>{const s=srsGet(u.id+'-'+i);return `<div class="pitem"><button class="icon" type="button" data-p="${i}" aria-label="Escuchar">${ICON.play}</button><div><div class="en">${esc(sub(c[0]))}</div><div class="es">${esc(sub(c[1]))}</div></div><span class="box">${s.n?'caja '+s.b:'nueva'}</span></div>`;}).join('')}</div>
+    <div class="row"><button class="btn primary" type="button" id="uRep">Escuchar y repetir</button><button class="btn" type="button" id="uProd">Decirlas desde el español</button></div></section>
+  <section class="card stack"><h3>Tareas de habla</h3>
+    ${u.tasks.map((t,i)=>`<div class="pitem"><span class="chip ${((r.tk||{})[i]||0)>=3?'ok':''}">${((r.tk||{})[i]||0)?fmt((r.tk||{})[i],1)+'/5':'pendiente'}</span><div><div class="en">${esc(t.es)}</div><div class="es">${SECS[u.lv]} segundos o más</div></div><button class="btn" type="button" data-t="${i}">Hablar</button></div>`).join('')}</section>
+  <section class="card stack"><h3>Escuchar y conversar</h3>
+    <div class="pitem"><span class="chip ${(r.ls||0)>=2?'ok':''}">${r.ls||0}/2</span><div><div class="en">Escucha activa</div><div class="es">Audio nuevo de nivel ${u.lv} con preguntas que respondes hablando</div></div><button class="btn" type="button" id="uLis">Escuchar</button></div>
+    <div class="pitem"><span class="chip ${(r.rp||0)>=3?'ok':''}">${r.rp?fmt(r.rp,1)+'/5':'pendiente'}</span><div><div class="en">Role-play con ${esc(u.role.split(',')[0])}</div><div class="es">Tu papel: <i>${esc(u.me)}</i></div></div><button class="btn" type="button" id="uChat">Conversar</button></div></section>
+  <p class="note">Dominio de la unidad: frases 50 %, tareas de habla 25 %, role-play 15 %, escucha activa 10 %. Las tareas y el role-play cuentan con 3 de 5 o más en la evaluación de Claude.</p></div>`;
+  $('#uBack').onclick=()=>go('ruta');
+  const us=$('#uSet');if(us)us.onclick=()=>{ST.unit=u.id;save();render();};
+  m.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>speak(u.ch[+b.dataset.p][0]));
+  const back=()=>go('unidad',{u:u.id});
+  $('#uRep').onclick=()=>runPractice(u.ch.map((c,i)=>({k:'repeat',cid:u.id+'-'+i,en:c[0],es:c[1]})),{title:u.t,onDone:back});
+  $('#uProd').onclick=()=>runPractice(shuffle(u.ch.map((c,i)=>({k:'produce',cid:u.id+'-'+i,en:c[0],es:c[1]}))),{title:u.t+' · desde el español',onDone:back});
+  m.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>go('tarea',{u:u.id,i:+b.dataset.t,onDone:back}));
+  $('#uLis').onclick=()=>go('escucha',{u:u.id,onDone:back});
+  $('#uChat').onclick=()=>go('chat',{u:u.id,onDone:back});
+};
+
+/* ====================== EVALUACIÓN (común) ====================== */
+const RUBRIC=`Scores from 0 to 5, where 3 means the learner meets the target CEFR descriptor, 4 is above it and 2 is below it.`;
+function evalPromptSpeaking(taskEn,transcript,secs,lv,extra){
+  return `You are an expert CEFR speaking examiner for American English.\n${PROFILE}\nTarget level: ${lv}.\nTask: ${taskEn}\n${extra||''}The learner answered by speaking for about ${secs} seconds (approximate). This is the speech-to-text transcript; ignore punctuation and capitalization, and do not blame the learner for obvious recognition slips:\n"""${transcript}"""\nJudge fluency from the transcript only (length and connectedness of the answer, self-repairs). ${RUBRIC}\nReply with only this JSON:\n{"cefr":"A0|A1|A2|B1|B2|C1|C2","range":0,"accuracy":0,"fluency":0,"coherence":0,"task":0,"fixes":[{"said":"exact words from the transcript","better":"corrected version","why_es":"short reason in Spanish"}],"upgrade":"the learner's answer rewritten one CEFR level higher, same ideas, natural American English, at most 110 words","phrases":[{"en":"useful phrase for this task","es":"Spanish translation"}],"summary_es":"two sentences in Spanish: what was good and the single most important thing to improve"}\nAt most 4 fixes and exactly 3 phrases.`;
+}
+function num(x){const n=Number(x);return isFinite(n)?clamp(n,0,5):0;}
+function evalHTML(j,opts){
+  opts=opts||{};
+  const keys=opts.keys||[['range','Vocabulario'],['accuracy','Gramática'],['fluency','Fluidez'],['coherence','Coherencia'],['task','Tarea']];
+  const avg=keys.reduce((a,[k])=>a+num(j[k]),0)/keys.length;
+  const fixes=Array.isArray(j.fixes)?j.fixes.slice(0,5):[],ph=Array.isArray(j.phrases)?j.phrases.slice(0,4):[];
+  return `<div class="card stack"><div class="row" style="justify-content:space-between"><div><span class="eyebrow">Evaluación de Claude</span><div class="big">${esc(String(j.cefr||'—'))}</div></div><span class="chip ${avg>=3?'ok':avg>=2?'warn':'bad'}">${fmt(avg,1)} / 5</span></div>
+  <div class="scores">${keys.map(([k,l])=>`<div><b>${fmt(num(j[k]),0)}</b><span>${l}</span></div>`).join('')}</div>
+  ${j.summary_es?`<p>${esc(j.summary_es)}</p>`:''}
+  ${fixes.length?'<h3>Correcciones</h3>'+fixes.map(f=>`<div class="fix"><s>${esc(f.said||'')}</s> → <b>${esc(f.better||'')}</b>${f.why_es?`<br><span class="small">${esc(f.why_es)}</span>`:''}</div>`).join(''):''}
+  ${j.upgrade?`<h3>Tu respuesta, un nivel más arriba</h3><div class="incoming"><div class="play"><button class="playbtn" type="button" id="upPlay" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}</div><div class="cue en" style="font-size:17px">${esc(j.upgrade)}</div><button class="btn radio" type="button" id="upShadow">Repetirla frase por frase</button></div>`:''}
+  ${ph.length?'<h3>Frases para tu repaso</h3>'+ph.map((p,i)=>`<div class="phr"><div><b>${esc(p.en||'')}</b><div class="es">${esc(p.es||'')}</div></div><button class="btn" type="button" data-add="${i}">Agregar</button></div>`).join(''):''}
+  </div>`;
+}
+function wireEval(j,lv,uid,back){
+  const up=$('#upPlay');if(up)up.onclick=()=>speak(j.upgrade);
+  const sh=$('#upShadow');if(sh)sh.onclick=()=>{const ss=splitSent(j.upgrade).map(s=>s.trim()).filter(s=>s.split(' ').length>=3).slice(0,8);runPractice(ss.map(s=>({k:'repeat',en:s,es:''})),{title:'Versión mejorada',onDone:back});};
+  document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const p=j.phrases[+b.dataset.add];if(!p||!p.en)return;addCustom(p.en,p.es||'',lv,uid);b.textContent='Agregada';b.disabled=true;});
+}
+function addCustom(en,es,lv,uid){
+  const id='x'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);
+  ST.custom[id]={en:String(en).slice(0,240),es:String(es).slice(0,240),lv:lv||null,u:uid||null,at:Date.now()};
+  ST.srs[id]={b:0,due:Date.now(),n:1,l:0};save();
+}
+function pushEval(type,lv,j,uid){
+  ST.evals.push({at:Date.now(),type,lv,u:uid||null,cefr:String(j.cefr||''),range:num(j.range),accuracy:num(j.accuracy),fluency:num(j.fluency),coherence:num(j.coherence),task:num(j.task!=null?j.task:j.interaction)});
+  ST.evals=ST.evals.slice(-60);save();
+}
+function avgOf(j,keys){return keys.reduce((a,k)=>a+num(j[k]),0)/keys.length;}
+
+/* ====================== TAREA DE HABLA ====================== */
+SCREENS.tarea=(m,p)=>{
+  const u=unitOf(p.u),t=u.tasks[p.i]||u.tasks[0],back=p.onDone||(()=>go('unidad',{u:u.id}));
+  m.innerHTML=`<div class="stack"><div class="runhead"><div><span class="eyebrow">${u.lv} · tarea de habla</span><h2>${esc(u.t)}</h2></div><button class="btn ghost" type="button" id="tBack">${ICON.back}Salir</button></div>
+  <div class="incoming"><span class="eyebrow">Tu supervisor te pide</span><div class="cue">${esc(t.es)}</div>
+    <div class="play"><button class="playbtn" type="button" id="tPlay" aria-label="Escuchar la consigna">${ICON.play}</button>${waveHTML()}<div class="es">${esc(t.en)}</div></div>
+    <div class="es">Habla al menos <b>${SECS[u.lv]} segundos</b>. Puedes dictar en varias partes: toca el micrófono otra vez y sigue.</div>
+    <details><summary class="small">Ver frases de apoyo</summary><ul>${u.ch.map(c=>`<li>${esc(sub(c[0]))}</li>`).join('')}</ul></details></div>
+  ${txHTML('tAns','Toca aquí y responde hablando',true)}
+  <div class="row"><button class="btn primary" type="button" id="tSend">Evaluar con Claude</button><span class="small" id="tInfo"></span></div>
+  <div id="tOut"></div></div>`;
+  $('#tBack').onclick=()=>{hush();back();};
+  $('#tPlay').onclick=()=>speak(t.en);
+  const tx=wireTx('tAns');
+  tx.box.addEventListener('input',()=>{$('#tInfo').textContent=words(tx.box.value)+' palabras';});
+  $('#tSend').onclick=async()=>{
+    const said=tx.box.value.trim();if(!said){tx.box.focus();return;}
+    noteSpoke(said);const secs=tx.secs();
+    if(!aiOn()){$('#tOut').innerHTML=needAI()+`<div class="card"><h3>Compara con estas frases</h3><ul>${u.ch.map(c=>`<li>${esc(sub(c[0]))}</li>`).join('')}</ul></div>`;return;}
+    $('#tSend').disabled=true;$('#tOut').innerHTML=`<div class="card">${thinkingHTML('Claude evalúa tu respuesta')}</div>`;
+    try{
+      const j=await aiJSON(evalPromptSpeaking(t.en,said,secs,u.lv),'default');
+      const avg=avgOf(j,['range','accuracy','fluency','coherence','task']);
+      const r=ST.units[u.id]||(ST.units[u.id]={});r.tk=r.tk||{};r.tk[p.i]=Math.max(r.tk[p.i]||0,avg);
+      pushEval('tarea',u.lv,j,u.id);
+      $('#tOut').innerHTML=evalHTML(j)+`<div class="row"><button class="btn" type="button" id="tAgain">Intentar otra vez</button><button class="btn primary" type="button" id="tDone">Listo</button></div>`;
+      wireEval(j,u.lv,u.id,()=>go('tarea',p));
+      $('#tAgain').onclick=()=>go('tarea',p);$('#tDone').onclick=()=>back();
+    }catch(e){$('#tOut').innerHTML=`<div class="fb bad">${esc(aiErr(e)||'Consulta cancelada.')}</div>`;}
+    $('#tSend').disabled=false;
+  };
+};
+
+/* ====================== ESCUCHA ACTIVA ====================== */
+const STYLE={A1:'Use very short sentences, the present simple, high-frequency words, numbers, times and plant equipment names. No idioms.',
+ A2:'Use short sentences, the past simple and going to, everyday and plant vocabulary, and simple linking words (and, but, because, then).',
+ B1:'Use connected speech with common linking words, some phrasal verbs, a clear problem and solution, and simple opinions.',
+ B2:'Use natural speed and varied grammar (conditionals, passive, reported speech), technical vocabulary, some fillers (well, you know) and at least one difference of opinion.',
+ C1:'Use fully natural American speech: fillers, false starts, idioms, phrasal verbs, implied meaning, understatement or irony, and dense technical detail. At least one important point must be implied rather than stated.'};
+const QSTYLE={A1:'Ask about explicit facts (who, what, where, when, how many).',A2:'Ask about explicit facts and the order of events.',B1:'Mix facts and reasons (why).',
+ B2:'Include at least one question about a speaker\'s opinion or attitude.',C1:'Include questions about implied meaning, attitude and the speaker\'s purpose, not only facts.'};
+const KINDS=['a radio call between two people','a shift handover conversation between two coworkers','a voicemail message','a short conversation in a meeting','a short talk by an engineer to the team','a conversation between two coworkers during a break'];
+function listenPrompt(u,lv,nq,exam){
+  const L=LEVELS[LV_IDX[lv]],kind=exam?pick(['a conversation between two coworkers','a short talk by an engineer','a discussion in a meeting']):KINDS[(UNITS.indexOf(u)+((ST.units[u.id]||{}).ls||0))%KINDS.length];
+  return `You write listening practice material for an English course.\n${PROFILE}\nCEFR level of this listening text: ${lv}${exam?' (this is a level test: make it a fair, typical '+lv+' listening task)':''}.\nTopic and situation: "${u.en}". ${u.ctx}\nWrite ${kind} in natural American English, about ${L.words} words in total. ${STYLE[lv]}\nThen write ${nq} questions in English that can be answered aloud in one or two sentences. ${QSTYLE[lv]}\nReply with only this JSON:\n{"title":"short title","speakers":["first name","first name"],"lines":[{"s":0,"t":"..."},{"s":1,"t":"..."}],"questions":[{"q":"question","q_es":"Spanish translation of the question","answer":"short model answer"}],"vocab":[{"en":"word or phrase","es":"Spanish translation"}]}\nRules: "s" is the speaker index; for a monologue use only 0 and split it into turns of one to three sentences. Write numbers as words. Give 4 to 6 vocab items.`;
+}
+function gradeListenPrompt(text,qs,answers,lv){
+  return `Grade a listening comprehension quiz for an English learner (CEFR ${lv}). The learner answered by speaking: answers are speech-to-text transcripts, so ignore punctuation, capitalization, grammar and small recognition errors, and judge only whether the meaning shows the learner understood.\nListening text:\n"""${text}"""\nQuestions, model answers and the learner's answers:\n${qs.map((q,i)=>`${i+1}. Q: ${q.q} | Model: ${q.answer} | Learner: "${answers[i]||''}"`).join('\n')}\nReply with only this JSON:\n{"items":[{"score":0.0,"fb_es":"one short sentence in Spanish","better":"a natural, correct way to say the answer in English"}],"tip_es":"one practical listening tip in Spanish"}\nscore is from 0 (wrong or empty) to 1 (fully correct); one item per question, in order.`;
+}
+function validPassage(j){return j&&Array.isArray(j.lines)&&j.lines.length&&Array.isArray(j.questions)&&j.questions.length;}
+SCREENS.escucha=(m,p)=>{
+  const u=unitOf(p.u),lv=p.lv||u.lv,back=p.onDone||(()=>go('unidad',{u:u.id}));
+  const S={j:null,show:false,ctl:null};
+  const shell=inner=>{m.innerHTML=`<div class="stack"><div class="runhead"><div><span class="eyebrow">${lv} · escucha activa</span><h2>${esc(u.en)}</h2></div><button class="btn ghost" type="button" id="lBack">${ICON.back}Salir</button></div>${inner}</div>`;
+    $('#lBack').onclick=()=>{if(S.ctl)S.ctl.abort();hush();back();};};
+  if(!aiOn()){shell(needAI()+`<button class="btn primary" type="button" id="lChain">Hacer la cadena de escucha sin Claude</button>`);$('#lChain').onclick=()=>runPractice(chainItems(u),{title:'Cadena de escucha',onDone:back});return;}
+  const gen=async()=>{
+    shell(`<div class="card stack">${thinkingHTML('Claude prepara un audio nuevo de nivel '+lv)}<p class="small">Suele tardar entre 5 y 40 segundos.</p><button class="btn" type="button" id="lStop">Cancelar</button></div>`);
+    S.ctl=new AbortController();$('#lStop').onclick=()=>S.ctl.abort();
+    try{
+      const j=await aiJSON(listenPrompt(u,lv,lv==='A1'?3:lv==='A2'?4:5,false),LV_IDX[lv]>=3?'default':'quick',{signal:S.ctl.signal,cache:false});
+      if(!validPassage(j))throw {code:'invalid_json'};
+      S.j=j;draw();
+    }catch(e){const t=aiErr(e);shell(`<div class="fb bad">${esc(t||'Cancelado.')}</div><button class="btn primary" type="button" id="lRetry">Intentar otra vez</button>`);$('#lRetry').onclick=gen;}
+  };
+  const lines=()=>S.j.lines.map(l=>({t:String(l.t||''),v:(+l.s===1)?'B':'A'}));
+  const fullText=()=>S.j.lines.map(l=>(S.j.speakers&&S.j.speakers[+l.s||0]?S.j.speakers[+l.s||0]+': ':'')+l.t).join('\n');
+  const low=LV_IDX[lv]<=1;
+  const draw=()=>{
+    const j=S.j;
+    shell(`<div class="incoming"><span class="eyebrow">Transmisión entrante · ${esc(j.title||'')}</span>
+      <div class="play"><button class="playbtn" type="button" id="lPlay" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}<button class="btn ghost" type="button" id="lSlow">Más lento</button></div>
+      ${low&&Array.isArray(j.vocab)?`<div class="es">Palabras clave: ${j.vocab.map(v=>`<b>${esc(v.en)}</b> (${esc(v.es)})`).join(', ')}</div>`:''}
+      <button class="link" type="button" id="lShow">${S.show?'Ocultar la transcripción':'Ver la transcripción (mejor después de escuchar dos veces)'}</button>
+      ${S.show?`<div class="small" style="white-space:pre-line;font-size:15px;color:var(--ink)">${esc(fullText())}</div>`:''}</div>
+      <p class="lead">Escucha las veces que necesites. Luego responde cada pregunta hablando.</p>
+      ${j.questions.map((q,i)=>`<div class="card stack"><div class="row"><button class="icon" type="button" data-q="${i}" aria-label="Escuchar la pregunta">${ICON.play}</button><b style="flex:1;min-width:0">${i+1}. ${esc(q.q)}</b></div>${low&&q.q_es?`<div class="es">${esc(q.q_es)}</div>`:''}${txHTML('q'+i,'Responde hablando')}</div>`).join('')}
+      <button class="btn primary wide" type="button" id="lSend">Enviar respuestas</button><div id="lOut"></div>`);
+    $('#lPlay').onclick=()=>speakLines(lines());
+    $('#lSlow').onclick=()=>speakLines(lines(),{slow:true});
+    $('#lShow').onclick=()=>{S.show=!S.show;S.peeked=true;draw();};
+    m.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>speak(j.questions[+b.dataset.q].q));
+    const txs=j.questions.map((q,i)=>wireTx('q'+i));
+    $('#lSend').onclick=async()=>{
+      const ans=txs.map(t=>t?t.box.value.trim():'');
+      ans.forEach(a=>{if(a)noteSpoke(a);});
+      $('#lSend').disabled=true;$('#lOut').innerHTML=`<div class="card">${thinkingHTML('Claude revisa tus respuestas')}</div>`;
+      try{
+        const g=await aiJSON(gradeListenPrompt(S.j.lines.map(l=>l.t).join(' '),j.questions,ans,lv),'quick');
+        const items=(g&&Array.isArray(g.items)?g.items:[]);
+        const sc=j.questions.map((q,i)=>clamp(Number((items[i]||{}).score)||0,0,1));
+        const pct=sc.reduce((a,b)=>a+b,0)/sc.length;
+        if(pct>=0.7&&!S.peeked){const r=ST.units[u.id]||(ST.units[u.id]={});r.ls=(r.ls||0)+1;save();}
+        $('#lOut').innerHTML=`<div class="fb ${pct>=0.7?'ok':pct>=0.5?'near':'bad'}"><h3>${fmt(100*pct)} % de comprensión</h3>${S.peeked&&pct>=0.7?'<p class="small">Viste la transcripción antes de responder: no cuenta para el dominio de la unidad.</p>':''}
+          ${j.questions.map((q,i)=>`<div class="fix"><b>${i+1}. ${fmt(100*sc[i])} %</b> ${esc((items[i]||{}).fb_es||'')}<br><span class="small">Modelo: ${esc((items[i]||{}).better||q.answer)}</span></div>`).join('')}
+          ${g&&g.tip_es?`<p>${esc(g.tip_es)}</p>`:''}</div>
+          ${Array.isArray(j.vocab)?'<div class="card"><h3>Vocabulario del audio</h3>'+j.vocab.map((v,i)=>`<div class="phr"><div><b>${esc(v.en)}</b><div class="es">${esc(v.es)}</div></div><button class="btn" type="button" data-v="${i}">Agregar</button></div>`).join('')+'</div>':''}
+          <div class="row"><button class="btn radio" type="button" id="lShadow">Repetir el audio frase por frase</button><button class="btn" type="button" id="lNew">Otro audio</button><button class="btn primary" type="button" id="lDone">Listo</button></div>`;
+        m.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const v=j.vocab[+b.dataset.v];addCustom(v.en,v.es,lv,u.id);b.textContent='Agregada';b.disabled=true;});
+        $('#lShadow').onclick=()=>runPractice(S.j.lines.flatMap(l=>splitSent(l.t)).map(s=>s.trim()).filter(s=>s.split(' ').length>=3).slice(0,10).map(s=>({k:'repeat',en:s,es:''})),{title:'Sombra del audio',onDone:back});
+        $('#lNew').onclick=()=>{S.show=false;S.peeked=false;gen();};
+        $('#lDone').onclick=()=>back();
+      }catch(e){$('#lOut').innerHTML=`<div class="fb bad">${esc(aiErr(e)||'Cancelado.')}</div>`;$('#lSend').disabled=false;}
+    };
+  };
+  gen();
+};
+
+/* ====================== CONVERSACIÓN (role-play) ====================== */
+SCREENS.hablar=(m)=>{
+  const u=workUnit();
+  m.innerHTML=`<div class="stack"><div><h1>Conversar</h1><p class="lead">Claude hace de supervisor, colega o entrevistador estadounidense. Tú escuchas su voz y respondes hablando. Al final te evalúa con los descriptores del MCER.</p></div>
+  ${aiOn()?'':needAI()}
+  <button class="btn primary wide" type="button" data-c="${u.id}">Role-play de tu unidad: ${esc(u.en)}</button>
+  <div class="card stack"><h3>Charla libre</h3><p class="lead" style="margin:0">Un colega estadounidense conversa contigo de lo que quieras: tu trabajo, tu país, tus planes de viaje.</p>
+    <div class="row">${LEVELS.map(l=>`<button class="btn" type="button" data-f="${l.id}">${l.id}</button>`).join('')}</div></div>
+  ${LEVELS.map(l=>`<div class="card stack"><h3>${l.id} · situaciones</h3><div class="units">${UNITS.filter(x=>x.lv===l.id).map(x=>`<button type="button" data-c="${x.id}"><b>${esc(x.en)}</b><small>${esc(x.role)}</small></button>`).join('')}</div></div>`).join('')}</div>`;
+  m.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>go('chat',{u:b.dataset.c}));
+  m.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>go('chat',{free:b.dataset.f}));
+};
+function chatRules(u,lv,free){
+  const L=LEVELS[LV_IDX[lv]];
+  const scen=free?'A relaxed conversation between two coworkers at a copper mine in Arizona. Talk about whatever the learner wants: work, Peru, life in the US, plans, opinions.':u.ctx;
+  const role=free?'Sam, a friendly American coworker who asks good follow-up questions':u.role;
+  const me=free?'a Peruvian metallurgical engineer':u.me;
+  return `Let's do a spoken role-play so I can practice American English. Stay in character for the whole conversation.\nScenario: ${scen}\nYour role: ${role}. My role: ${me}.\nMy CEFR level: ${lv}. ${L.talk}\nRules:\n- Reply ONLY with your next spoken line: no stage directions, no translations, no lists, no emojis, no notes about my English.\n- Keep each reply under ${L.maxw} words and usually end with a question or a prompt that makes me speak.\n- My messages are speech-to-text transcripts: ignore punctuation, capitalization and small recognition errors.\n- If an error of mine blocks meaning, naturally rephrase what I said correctly inside your reply and continue.\n- If I write in Spanish, answer in simple English and help me say it in English.\n${free?'':'- Steer the conversation toward this goal for me: '+u.goal+' (the goal is in Spanish; keep speaking English).\n'}Start now with your first line.`;
+}
+SCREENS.chat=(m,p)=>{
+  const free=p.free||null,u=free?workUnit():unitOf(p.u),lv=free||u.lv,back=p.onDone||(()=>go('hablar'));
+  const C={rules:chatRules(u,lv,free),turns:[],busy:false,ctl:null,show:{},tr:{},ended:false};
+  UI.leave=()=>{if(C.ctl)C.ctl.abort();};
+  const maxT=TURNS[lv];
+  const mine=()=>C.turns.filter(t=>t.role==='user').length;
+  const draw=(focus)=>{
+    m.innerHTML=`<div class="stack"><div class="runhead"><div><span class="eyebrow">${lv} · ${free?'charla libre':'role-play'}</span><h2>${esc(free?'Charla con Sam':u.en)}</h2></div><button class="btn ghost" type="button" id="cBack">${ICON.back}Salir</button></div>
+    <p class="small" style="margin:0">${free?'Habla de lo que quieras.':'Tu papel: <i>'+esc(u.me)+'</i>. Objetivo: '+esc(u.goal)}</p>
+    ${aiOn()?'':needAI()}
+    <div class="chat" id="chatList">${C.turns.map((t,i)=>t.role==='assistant'?`<div class="msg them"><span class="eyebrow" style="color:var(--radio)">Entrante</span>
+      <div class="${ST.listenFirst&&!C.show[i]?'hidden-text':''}">${esc(t.content)}</div>${C.tr[i]?`<div class="es">${esc(C.tr[i])}</div>`:''}
+      <div class="meta"><button class="icon" type="button" data-pl="${i}" aria-label="Escuchar">${ICON.play}</button>${ST.listenFirst&&!C.show[i]?`<button class="link" type="button" data-sh="${i}">Ver texto</button>`:''}${C.tr[i]?'':`<button class="link" type="button" data-tr="${i}">¿Qué dijo?</button>`}</div></div>`:`<div class="msg me">${esc(t.content)}</div>`).join('')}
+      ${C.busy?`<div class="msg them">${thinkingHTML(C.turns.length?'Escribiendo':'Preparando la conversación')}</div>`:''}</div>
+    ${C.err?`<div class="fb bad">${esc(C.err)}</div>`:''}
+    ${C.ended?'':(C.turns.length&&!C.busy?txHTML('cAns','Toca aquí y responde hablando')+`<div class="row"><button class="btn primary" type="button" id="cSend">Transmitir</button><span class="small">${mine()} de ${maxT} turnos</span><button class="btn" type="button" id="cEnd"${mine()<3?' disabled':''}>Terminar y evaluar</button></div>`:'')}
+    ${!C.turns.length&&!C.busy&&aiOn()?'<button class="btn primary wide" type="button" id="cStart">Empezar la conversación</button>':''}
+    <div id="cOut"></div></div>`;
+    $('#cBack').onclick=()=>{if(C.ctl)C.ctl.abort();hush();back();};
+    m.querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>speak(C.turns[+b.dataset.pl].content));
+    m.querySelectorAll('[data-sh]').forEach(b=>b.onclick=()=>{C.show[+b.dataset.sh]=true;draw();});
+    m.querySelectorAll('[data-tr]').forEach(b=>b.onclick=async()=>{const i=+b.dataset.tr;b.textContent='Traduciendo…';b.disabled=true;
+      try{const r=await AI.fn('Translate into natural Latin American Spanish. Reply with only the translation:\n\n'+C.turns[i].content,{modelTier:'quick'});C.tr[i]=r.text.trim();C.show[i]=true;}catch(e){C.err=aiErr(e);}draw();});
+    const st=$('#cStart');if(st)st.onclick=()=>ask();
+    if(!C.ended&&C.turns.length&&!C.busy){
+      const tx=wireTx('cAns');
+      if(focus&&tx)setTimeout(()=>{try{tx.box.focus({preventScroll:true});}catch(e){}},50);
+      $('#cSend').onclick=()=>{const v=tx.box.value.trim();if(!v){tx.box.focus();return;}noteSpoke(v);C.turns.push({role:'user',content:v,secs:tx.secs()});
+        if(mine()>=maxT){draw();evaluate();}else ask();};
+      $('#cEnd').onclick=()=>evaluate();
+    }
+    const list=$('#chatList');if(list&&list.lastElementChild&&C.turns.length>1)list.lastElementChild.scrollIntoView({block:'nearest'});
+  };
+  const ask=async()=>{
+    C.busy=true;C.err='';draw();
+    C.ctl=new AbortController();
+    const msgs=[{role:'user',content:C.rules},...C.turns.map(t=>({role:t.role,content:t.content}))];
+    if(msgs[msgs.length-1].role!=='user')msgs.push({role:'user',content:'(continue)'});
+    try{
+      const r=await AI.fn(msgs.slice(0,1).concat(msgs.slice(1).slice(-24)),{modelTier:'quick',cache:false,signal:C.ctl.signal});
+      const line=r.text.trim().replace(/^["“]|["”]$/g,'');
+      C.turns.push({role:'assistant',content:line});C.busy=false;draw(true);
+      speak(line);
+    }catch(e){C.busy=false;C.err=aiErr(e);draw();}
+  };
+  const evaluate=async()=>{
+    C.ended=true;draw();
+    $('#cOut').innerHTML=`<div class="card">${thinkingHTML('Claude evalúa la conversación')}</div>`;
+    const transcript=C.turns.map(t=>(t.role==='assistant'?'PARTNER: ':'LEARNER: ')+t.content).join('\n');
+    const secs=C.turns.reduce((a,t)=>a+(t.secs||0),0);
+    const prompt=`You are an expert CEFR speaking examiner for American English.\n${PROFILE}\nTarget level: ${lv}.\nRole-play scenario: ${free?'free conversation with a coworker':u.ctx} The learner's goal: ${free?'keep a natural conversation':u.goal}\nTranscript (the learner's lines are speech-to-text transcripts; ignore punctuation and capitalization, and do not blame the learner for obvious recognition slips; the learner spoke for about ${secs} seconds in total):\n"""\n${transcript}\n"""\nAssess only the LEARNER. Judge fluency from the transcript (length and connectedness of turns). ${RUBRIC}\nReply with only this JSON:\n{"cefr":"A0|A1|A2|B1|B2|C1|C2","range":0,"accuracy":0,"fluency":0,"coherence":0,"interaction":0,"fixes":[{"said":"exact learner words","better":"corrected version","why_es":"short reason in Spanish"}],"upgrade":"the learner's best turn rewritten one CEFR level higher, natural American English, at most 80 words","phrases":[{"en":"useful phrase for this situation","es":"Spanish translation"}],"summary_es":"two sentences in Spanish: what was good and the single most important thing to improve"}\nAt most 5 fixes and exactly 3 phrases.`;
+    try{
+      const j=await aiJSON(prompt,'default');
+      const keys=['range','accuracy','fluency','coherence','interaction'];
+      const avg=avgOf(j,keys);
+      if(!free){const r=ST.units[u.id]||(ST.units[u.id]={});r.rp=Math.max(r.rp||0,avg);}
+      pushEval(free?'charla':'roleplay',lv,j,free?null:u.id);
+      $('#cOut').innerHTML=evalHTML(j,{keys:[['range','Vocabulario'],['accuracy','Gramática'],['fluency','Fluidez'],['coherence','Coherencia'],['interaction','Interacción']]})+`<div class="row"><button class="btn" type="button" id="cAgain">Otra conversación</button><button class="btn primary" type="button" id="cDone">Listo</button></div>`;
+      wireEval(j,lv,free?null:u.id,()=>go('chat',p));
+      $('#cAgain').onclick=()=>go('chat',p);$('#cDone').onclick=()=>back();
+    }catch(e){$('#cOut').innerHTML=`<div class="fb bad">${esc(aiErr(e)||'Cancelado.')}</div><button class="btn" type="button" id="cRe">Intentar evaluar otra vez</button>`;$('#cRe').onclick=()=>evaluate();}
+  };
+  draw();
+};
+
+/* ====================== SONIDOS ====================== */
+SCREENS.sonidos=(m)=>{
+  m.innerHTML=`<div class="stack"><div><h1>Sonidos que el español no tiene</h1><p class="lead">Los errores de pronunciación más comunes de los hispanohablantes. Escuchas, dices la palabra y el dictado actúa como un oyente estadounidense: si escribe la palabra correcta, se te entendió.</p></div>
+  ${PAIRS.map(pr=>{const s=ST.pairs[pr.id]||{n:0,ok:0};return `<div class="card stack"><div class="lvhead"><h3>${esc(pr.t)}</h3><span class="chip ${s.n>=6&&s.ok/s.n>=0.8?'ok':''}">${s.n?fmt(100*s.ok/s.n)+' % · '+s.n+' intentos':'sin practicar'}</span></div>
+  <p class="lead" style="margin:0">${esc(pr.es)}</p><div class="row">${(pr.p?pr.p.slice(0,4).map(x=>x.join(' / ')):pr.w.slice(0,5)).map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>
+  <button class="btn primary" type="button" data-s="${pr.id}">Practicar</button></div>`;}).join('')}</div>`;
+  m.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{const pr=PAIRS.find(x=>x.id===b.dataset.s);runPractice(pairItems(pr),{title:pr.t,onDone:()=>go('sonidos')});});
+};
+
+/* ====================== EXAMEN DE NIVEL ====================== */
+const EXAM={
+ A1:[{k:'Entrevista',es:'Di tu nombre, de dónde eres y en qué trabajas.',en:'What is your name, where are you from and what do you do?'},{k:'Turno largo',es:'Describe tu planta: qué equipos hay y dónde están.',en:'Describe your plant: what equipment is there and where is it?'},{k:'Opinión',es:'¿Te gusta tu trabajo? ¿Por qué?',en:'Do you like your job? Why or why not?'}],
+ A2:[{k:'Entrevista',es:'Cuenta tu último turno.',en:'Tell me about your last shift at work.'},{k:'Turno largo',es:'Explica el proceso de tu planta paso a paso.',en:'Explain the process in your plant step by step.'},{k:'Opinión',es:'¿Qué es mejor: turnos de día o de noche? ¿Por qué?',en:'What is better, day shifts or night shifts? Why?'}],
+ B1:[{k:'Entrevista',es:'Cuenta un problema que resolviste en el trabajo.',en:'Tell me about a problem you solved at work.'},{k:'Turno largo',es:'Explica cómo tomar una muestra de pulpa de forma segura.',en:'Explain how to take a slurry sample safely.'},{k:'Discusión',es:'¿Debe una planta operar siempre al máximo tonelaje? Da razones.',en:'Should a plant always run at maximum throughput? Give your reasons.'}],
+ B2:[{k:'Entrevista',es:'Describe un desacuerdo con un colega y cómo lo manejaste.',en:'Describe a disagreement with a colleague and how you handled it.'},{k:'Turno largo',es:'Presenta los resultados de una mejora en planta.',en:'Present the results of an improvement project in your plant.'},{k:'Discusión',es:'"La automatización reemplazará a los operadores de sala de control." ¿Estás de acuerdo?',en:'Automation will replace control room operators. Do you agree?'}],
+ C1:[{k:'Entrevista',es:'¿Qué cambiarías en la gestión de tu planta y por qué?',en:'What would you change about the way your plant is managed, and why?'},{k:'Turno largo',es:'Convence a la gerencia de invertir en un nuevo circuito de flotación, incluyendo riesgos.',en:'Make the case to senior management for investing in a new flotation circuit, including the risks.'},{k:'Discusión',es:'¿Cómo debería equilibrar una minera la producción con la relación con las comunidades vecinas? Presenta distintas perspectivas.',en:'How should a mining company balance production with its relationship with neighboring communities? Discuss different perspectives.'}]
+};
+SCREENS.examen=(m,p)=>{
+  const lv=p.lv,L=LEVELS[LV_IDX[lv]],u=UNITS.filter(x=>x.lv===lv)[Math.floor(Math.random()*6)];
+  const X={step:'intro',lis:null,ans:[],lisScore:0,spk:[],ctl:null};
+  UI.leave=()=>{if(X.ctl)X.ctl.abort();};
+  const hist=(ST.exams[lv]||[]).slice(-3).reverse();
+  const shell=inner=>{m.innerHTML=`<div class="stack"><div class="runhead"><div><span class="eyebrow">Examen de nivel</span><h2>${lv} · ${esc(L.name)}</h2></div><button class="btn ghost" type="button" id="xBack">${ICON.back}Salir</button></div>${inner}</div>`;$('#xBack').onclick=()=>{if(X.ctl)X.ctl.abort();hush();go('ruta');};};
+  const intro=()=>{shell(`<div class="card stack"><p>${esc(L.can)}</p><ol><li><b>Escucha:</b> un audio nuevo de nivel ${lv} con 5 preguntas que respondes hablando.</li><li><b>Habla:</b> tres tareas (entrevista, turno largo y ${esc(EXAM[lv][2].k.toLowerCase())}). Habla al menos ${SECS[lv]} segundos en el turno largo.</li></ol>
+    <p class="small">Apruebas con 70 % o más en escucha, nivel ${lv} o superior en habla y 3 de 5 de promedio en los criterios. Toma unos 15 minutos. No mires la transcripción.</p>
+    ${hist.length?'<p class="small">Intentos anteriores: '+hist.map(h=>`${new Date(h.at).toLocaleDateString('es-PE')} · escucha ${fmt(100*h.lis)} % · habla ${esc(h.cefr)} ${h.pass?'(aprobado)':''}`).join(' · ')+'</p>':''}
+    ${aiOn()?'<button class="btn primary" type="button" id="xGo">Empezar el examen</button>':needAI()}</div>`);const g=$('#xGo');if(g)g.onclick=lis;};
+  const lis=async()=>{
+    shell(`<div class="card stack">${thinkingHTML('Claude prepara la parte de escucha')}<button class="btn" type="button" id="xStop">Cancelar</button></div>`);
+    X.ctl=new AbortController();$('#xStop').onclick=()=>X.ctl.abort();
+    try{const j=await aiJSON(listenPrompt(u,lv,5,true),'default',{signal:X.ctl.signal,cache:false});if(!validPassage(j))throw {code:'invalid_json'};X.lis=j;drawLis();}
+    catch(e){shell(`<div class="fb bad">${esc(aiErr(e)||'Cancelado.')}</div><button class="btn primary" type="button" id="xR">Intentar otra vez</button>`);$('#xR').onclick=lis;}
+  };
+  const drawLis=()=>{
+    const j=X.lis;
+    shell(`<span class="eyebrow">Parte 1 de 2 · escucha</span><div class="incoming"><div class="play"><button class="playbtn" type="button" id="xPlay" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}</div><p class="es" style="margin:0">Puedes escucharlo dos veces.</p></div>
+    ${j.questions.slice(0,5).map((q,i)=>`<div class="card stack"><div class="row"><button class="icon" type="button" data-q="${i}" aria-label="Escuchar la pregunta">${ICON.play}</button><b style="flex:1;min-width:0">${i+1}. ${esc(q.q)}</b></div>${txHTML('xq'+i,'Responde hablando')}</div>`).join('')}
+    <button class="btn primary wide" type="button" id="xNext">Pasar a la parte de habla</button>`);
+    let plays=0;const lines=j.lines.map(l=>({t:String(l.t||''),v:+l.s===1?'B':'A'}));
+    $('#xPlay').onclick=()=>{if(plays>=2)return;plays++;speakLines(lines);if(plays>=2)$('#xPlay').disabled=true;};
+    m.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>speak(j.questions[+b.dataset.q].q));
+    const txs=j.questions.slice(0,5).map((q,i)=>wireTx('xq'+i));
+    $('#xNext').onclick=()=>{X.ans=txs.map(t=>t?t.box.value.trim():'');X.ans.forEach(a=>{if(a)noteSpoke(a);});X.k=0;spk();};
+  };
+  const spk=()=>{
+    const t=EXAM[lv][X.k];
+    shell(`<span class="eyebrow">Parte 2 de 2 · habla · ${X.k+1} de 3</span><div class="incoming"><span class="eyebrow">${esc(t.k)}</span><div class="cue">${esc(t.es)}</div><div class="play"><button class="playbtn" type="button" id="xP2" aria-label="Escuchar">${ICON.play}</button>${waveHTML()}<div class="es">${esc(t.en)}</div></div></div>
+    ${txHTML('xs','Responde hablando',true)}<button class="btn primary wide" type="button" id="xN2">${X.k<2?'Siguiente tarea':'Terminar y evaluar'}</button>`);
+    $('#xP2').onclick=()=>speak(t.en);speak(t.en);
+    const tx=wireTx('xs');
+    $('#xN2').onclick=()=>{const v=tx.box.value.trim();if(!v){tx.box.focus();return;}noteSpoke(v);X.spk[X.k]={t,said:v,secs:tx.secs()};X.k++;if(X.k<3)spk();else grade();};
+  };
+  const grade=async()=>{
+    shell(`<div class="card stack">${thinkingHTML('Claude evalúa tu examen')}<p class="small">Puede tardar hasta un minuto.</p></div>`);
+    try{
+      const [g1,g2]=await Promise.all([
+        aiJSON(gradeListenPrompt(X.lis.lines.map(l=>l.t).join(' '),X.lis.questions.slice(0,5),X.ans,lv),'default'),
+        aiJSON(`You are an expert CEFR speaking examiner for American English, running a ${lv} level test.\n${PROFILE}\nThe learner did three speaking tasks. Answers are speech-to-text transcripts: ignore punctuation and capitalization and obvious recognition slips; judge fluency from the transcript (length and connectedness).\n${X.spk.map((s,i)=>`Task ${i+1} (${s.t.k}): ${s.t.en}\nSpoke about ${s.secs} seconds. Transcript: """${s.said}"""`).join('\n\n')}\nGive ONE overall assessment across the three tasks. ${RUBRIC}\nReply with only this JSON:\n{"cefr":"A0|A1|A2|B1|B2|C1|C2","range":0,"accuracy":0,"fluency":0,"coherence":0,"task":0,"fixes":[{"said":"exact learner words","better":"corrected version","why_es":"short reason in Spanish"}],"phrases":[{"en":"useful phrase","es":"Spanish translation"}],"summary_es":"three sentences in Spanish: strengths, the main gap to reach ${lv} or the next level, and what to practice"}\nAt most 5 fixes and exactly 3 phrases.`,'default')
+      ]);
+      const items=g1&&Array.isArray(g1.items)?g1.items:[];
+      const lisScore=X.lis.questions.slice(0,5).reduce((a,q,i)=>a+clamp(Number((items[i]||{}).score)||0,0,1),0)/Math.min(5,X.lis.questions.length);
+      const avg=avgOf(g2,['range','accuracy','fluency','coherence','task']);
+      const cefr=String(g2.cefr||'A0').toUpperCase();
+      const pass=lisScore>=0.7&&(CEFR_RANK[cefr]||0)>=CEFR_RANK[lv]&&avg>=3;
+      (ST.exams[lv]=ST.exams[lv]||[]).push({at:Date.now(),lis:lisScore,cefr,avg,pass});
+      if(pass&&!ST.passed[lv])ST.passed[lv]={at:Date.now(),lis:lisScore,cefr,avg};
+      pushEval('examen',lv,g2,null);save();
+      shell(`<div class="fb ${pass?'ok':'bad'}"><h3>${pass?'Aprobaste el examen '+lv:'Todavía no: sigue con las unidades de '+lv}</h3><p>Escucha: <b>${fmt(100*lisScore)} %</b> · Habla: <b>${esc(cefr)}</b>, ${fmt(avg,1)} / 5.</p></div>
+      <div class="card stack"><h3>Escucha</h3>${X.lis.questions.slice(0,5).map((q,i)=>`<div class="fix"><b>${i+1}. ${fmt(100*clamp(Number((items[i]||{}).score)||0,0,1))} %</b> ${esc(q.q)}<br><span class="small">${esc((items[i]||{}).fb_es||'')} Modelo: ${esc((items[i]||{}).better||q.answer)}</span></div>`).join('')}
+      <details><summary class="small">Ver la transcripción del audio</summary><p class="small" style="white-space:pre-line">${esc(X.lis.lines.map(l=>l.t).join('\n'))}</p></details></div>
+      ${evalHTML(g2)}<button class="btn primary wide" type="button" id="xDone">Volver a la ruta</button>`);
+      wireEval(g2,lv,null,()=>go('ruta'));$('#xDone').onclick=()=>go('ruta');
+    }catch(e){shell(`<div class="fb bad">${esc(aiErr(e)||'Cancelado.')}</div><button class="btn primary" type="button" id="xG">Intentar evaluar otra vez</button>`);$('#xG').onclick=grade;}
+  };
+  intro();
+};
+
+/* ====================== PROGRESO ====================== */
+SCREENS.progreso=(m)=>{
+  const days=[];for(let i=13;i>=0;i--){const d=new Date(Date.now()-i*DAY);const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');days.push({k,d,v:(ST.days[k]||{}).sec||0});}
+  const mx=Math.max(1800,...days.map(d=>d.v));
+  const tot=Object.values(ST.days).reduce((a,d)=>({spk:a.spk+(d.spk||0),w:a.w+(d.w||0),lis:a.lis+(d.lis||0)}),{spk:0,w:0,lis:0});
+  const allIds=Object.keys(CHUNKS).concat(Object.keys(ST.custom));
+  const mast=allIds.filter(id=>srsGet(id).b>=MASTER_BOX).length,seen=allIds.filter(id=>srsGet(id).n>0).length;
+  const lv=currentLevel(),next=LEVELS[lv?Math.min(4,LV_IDX[lv]+1):0];
+  const hrs=totalSec()/3600;
+  const ev=ST.evals.slice(-8).reverse();
+  m.innerHTML=`<div class="stack"><div><h1>Progreso</h1><p class="lead">Tu nivel sube solo cuando apruebas un examen de nivel. Las horas y las frases dominadas muestran si estás practicando lo suficiente para llegar.</p></div>
+  <div class="card stack"><div class="row" style="justify-content:space-between;align-items:flex-end"><div><span class="eyebrow">Ruta a C1</span><div class="big">${fmt(100*routeMastery(),2)} %</div></div><div style="text-align:right"><span class="eyebrow">Nivel aprobado</span><div class="big">${lv||'A0'}</div></div></div>${trackHTML()}
+    ${LEVELS.map(l=>`<div class="lvbar"><b>${l.id}</b><div class="meter"><span class="${levelMastery(l.id)>=0.999?'full':''}" style="width:${(100*levelMastery(l.id)).toFixed(1)}%"></span></div><output>${fmt(100*levelMastery(l.id),1)} %</output></div>`).join('')}</div>
+  <div class="kpis"><div><b>${fmt(hrs,1)} h</b><span>activas en total</span></div><div><b>${fmt(tot.spk)}</b><span>transmisiones habladas</span></div><div><b>${fmt(tot.lis/60)} min</b><span>de escucha</span></div><div><b>${fmt(tot.w)}</b><span>palabras dichas</span></div><div><b>${mast}/${allIds.length}</b><span>frases dominadas</span></div><div><b>${streak()} d</b><span>racha (5 min o más al día)</span></div></div>
+  <div class="card"><h3>Minutos por día, últimas 2 semanas</h3><div class="bars14">${days.map(d=>`<div title="${d.k}: ${fmt(d.v/60)} min"><span class="b" style="height:${(100*d.v/mx).toFixed(1)}%"></span><small>${d.d.getDate()}</small></div>`).join('')}</div>
+    <p class="small" style="margin:8px 0 0">Referencia de Cambridge English: unas ${next.h} horas guiadas acumuladas para ${next.id}, y 700 a 800 para C1. Llevas ${fmt(hrs,1)} h en la app. A 1 hora diaria, de cero a C1 son unos dos años; con más horas y con inglés real fuera de la app, menos.</p></div>
+  <div class="card stack"><h3>Últimas evaluaciones de Claude</h3>${ev.length?ev.map(e=>`<div class="phr"><div><b>${esc(e.cefr||'—')}</b> · ${esc({tarea:'Tarea de habla',roleplay:'Role-play',charla:'Charla libre',examen:'Examen'}[e.type]||e.type)} ${esc(e.lv)}<div class="es">${new Date(e.at).toLocaleDateString('es-PE')} · vocabulario ${fmt(e.range)} · gramática ${fmt(e.accuracy)} · fluidez ${fmt(e.fluency)} · coherencia ${fmt(e.coherence)}</div></div><span class="chip">${fmt((e.range+e.accuracy+e.fluency+e.coherence+e.task)/5,1)}</span></div>`).join(''):'<p class="lead">Aún no hay evaluaciones. Haz una tarea de habla o un role-play.</p>'}</div>
+  <div class="card stack"><h3>Repaso</h3><p class="lead" style="margin:0">${seen} frases vistas · ${dueCards(999).length} para repasar hoy · ${Object.keys(ST.custom).length} agregada${Object.keys(ST.custom).length===1?'':'s'} desde tus evaluaciones y audios.</p></div>
+  </div>`;
+};
+
+/* ====================== AJUSTES ====================== */
+SCREENS.ajustes=(m)=>{
+  const vs=TTS.voices;
+  const opt=(sel)=>vs.map(v=>`<option value="${esc(v.name)}"${v.name===sel?' selected':''}>${esc(v.name)}</option>`).join('');
+  const th=document.documentElement.getAttribute('data-theme')||'';
+  m.innerHTML=`<div class="stack"><h1>Ajustes</h1>
+  <div class="card stack"><label class="fld">Tu nombre (para las presentaciones)<input id="sName" value="${esc(ST.name)}" placeholder="Por ejemplo: David" autocomplete="given-name"></label></div>
+  <div class="card stack"><h3>Voces en inglés americano</h3>
+    ${vs.length?`<label class="fld">Voz principal<select id="sV1">${opt(voiceA()&&voiceA().name)}</select></label><label class="fld">Segunda voz (diálogos)<select id="sV2">${opt(voiceB()&&voiceB().name)}</select></label>`:'<p class="lead">Este dispositivo no muestra voces en inglés de Estados Unidos.</p>'}
+    <label class="fld">Velocidad: <span id="sRateV">${fmt(ST.rate||1,2)}×</span> sobre la velocidad del nivel<input type="range" id="sRate" min="0.7" max="1.3" step="0.05" value="${ST.rate||1}"></label>
+    <div class="row"><button class="btn radio" type="button" id="sTest">${ICON.play}Probar voces</button></div>
+    <label class="toggle"><input type="checkbox" id="sLF"${ST.listenFirst?' checked':''}><span>Escuchar antes de leer: oculta el texto de lo que te dicen hasta que lo pidas.</span></label></div>
+  <div class="card stack"><h3>Cómo hablar en la app</h3><div class="how"><div><b>Android</b>Micrófono del teclado (Gboard), con el idioma del teclado en inglés de EE. UU.</div><div><b>iPhone</b>Micrófono del teclado. Actívalo en Ajustes › General › Teclado › Dictado, y elige inglés (EE. UU.).</div><div><b>Windows</b>Windows + H dentro del recuadro.</div><div><b>Mac</b>Tecla de dictado o doble Fn.</div></div>
+    <p class="small" style="margin:0">${STT.ok?'Este navegador también permite el botón «Hablar» dentro de la app.':'Dentro de claude.ai la página no puede usar el micrófono directamente; el dictado del teclado funciona igual.'}</p></div>
+  <div class="card stack"><h3>Apariencia</h3><div class="row">${[['','Sistema'],['light','Claro'],['dark','Oscuro']].map(([v,l])=>`<button class="btn${th===v?' primary':''}" type="button" data-th="${v}">${l}</button>`).join('')}</div></div>
+  <div class="card stack"><h3>Tu progreso</h3><p class="lead" style="margin:0" id="sync">${CLOUD.ref?'Guardado en tu cuenta: te sigue en el celular y en la computadora.':'Guardado en este navegador.'}</p>
+    <button class="btn" type="button" id="sReset">Borrar todo mi progreso</button><div id="sConf"></div></div></div>`;
+  $('#sName').oninput=e=>{ST.name=e.target.value.slice(0,30);save();};
+  const v1=$('#sV1');if(v1)v1.onchange=e=>{ST.voice=e.target.value;save();};
+  const v2=$('#sV2');if(v2)v2.onchange=e=>{ST.voice2=e.target.value;save();};
+  $('#sRate').oninput=e=>{ST.rate=Number(e.target.value);$('#sRateV').textContent=fmt(ST.rate,2)+'×';save();};
+  $('#sTest').onclick=()=>speakLines([{t:'Control room, this is flotation. Over.',v:'A'},{t:'Go ahead, flotation.',v:'B'}]);
+  $('#sLF').onchange=e=>{ST.listenFirst=e.target.checked;save();};
+  m.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{const v=b.dataset.th;if(v)document.documentElement.setAttribute('data-theme',v);else document.documentElement.removeAttribute('data-theme');lsSet('cre_theme',v);render();});
+  $('#sReset').onclick=()=>{$('#sConf').innerHTML=`<div class="confirm">Se borrarán frases, evaluaciones, exámenes y horas. <div class="row" style="margin-top:8px"><button class="btn primary" type="button" id="sYes">Sí, borrar</button><button class="btn" type="button" id="sNo">Cancelar</button></div></div>`;
+    $('#sYes').onclick=()=>{const keep={name:ST.name,voice:ST.voice,voice2:ST.voice2,rate:ST.rate};ST=Object.assign(blankState(),keep);save(true);go('hoy');};
+    $('#sNo').onclick=()=>{$('#sConf').innerHTML='';};};
+};
+
+/* ---------- arranque ---------- */
+(function boot(){
+  const th=lsGet('cre_theme','');if(th)document.documentElement.setAttribute('data-theme',th);
+  go('hoy');
+  initAI();initCloud();
+})();
+</script>
+
+</body></html>
